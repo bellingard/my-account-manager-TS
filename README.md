@@ -1,4 +1,4 @@
-# my-account-manager-v2
+# my-account-manager
 
 ## Project setup
 ```
