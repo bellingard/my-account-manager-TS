@@ -1,7 +1,11 @@
 {
   "name": "my-account-manager-v2",
-  "version": "0.1.0",
+  "version": "2.0.0",
+  "author": "Fabrice Bellingard <bellingard@gmail.com>",
+  "description": "My Account Manager",
+  "license": "LGPL-3.0",
   "private": true,
+  "main": "background.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -68,6 +72,5 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "main": "background.js"
+  ]
 }
