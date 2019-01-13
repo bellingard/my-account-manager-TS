@@ -20,5 +20,9 @@ yarn-error.log*
 *.sln
 *.sw*
 
+# Sonar* files
+.scannerwork
+.sonarlint
+
 #Electron-builder output
 /dist_electron
