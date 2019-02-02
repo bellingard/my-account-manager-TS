@@ -1,32 +1,31 @@
 import Formatter from '@/utils/formatter'
-import { expect } from 'chai'
 
 const f = new Formatter()
 
 describe('Formatter', () => {
   it('should return year', () => {
     let date = '2017-08-14'
-    expect(f.year(date)).to.equal('2017')
+    expect(f.year(date)).toEqual('2017')
   })
 
   it('should return date in year', () => {
     let date = '2017-08-14'
-    expect(f.dateInYear(date)).to.equal('14 Août')
+    expect(f.dateInYear(date)).toEqual('14 Août')
   })
 
   it('should format amount', () => {
-    expect(f.amount(12345)).to.equal('123.45')
+    expect(f.amount(12345)).toEqual('123.45')
   })
 
   it('should provide color for amount', () => {
     let red = 'red--text'
     let green = 'green--text'
-    expect(f.colorForAmount(1)).to.equal(green)
-    expect(f.colorForAmount(-1)).to.equal(red)
+    expect(f.colorForAmount(1)).toEqual(green)
+    expect(f.colorForAmount(-1)).toEqual(red)
   })
 
   it('should return path for institution icons', () => {
-    expect(f.institutionIcon('foo')).to.equal('static/institutions/foo.png')
+    expect(f.institutionIcon('foo')).toEqual('static/institutions/foo.png')
   })
 
   //   it('should correctly display transaction amount depending on which account it is displaye in', () => {
@@ -35,8 +34,8 @@ describe('Formatter', () => {
   //       fromId: 'from',
   //       toId: 'to'
   //     }
-  //     expect(f.transactionAmount(t, 'from')).to.equal('-0.01')
-  //     expect(f.transactionAmount(t, 'to')).to.equal('0.01')
+  //     expect(f.transactionAmount(t, 'from')).toEqual('-0.01')
+  //     expect(f.transactionAmount(t, 'to')).toEqual('0.01')
   //   })
 
   //   it('should tell if transaction is a card payments', () => {
