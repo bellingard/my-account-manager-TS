@@ -2,10 +2,16 @@ import path from 'path'
 import fs from 'fs'
 const jsonfile = require('jsonfile')
 
+/*
+ * Configuration properties
+ */
 export interface ConfigProps {
   storageFolder: string
 }
 
+/*
+ * Class to manage config of the app
+ */
 export default class Config {
   configFilePath:  string;
   props!: ConfigProps;

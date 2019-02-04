@@ -10,16 +10,10 @@ describe('Config', () => {
   const tmpDir = path.join(os.tmpdir(), 'config.spec.ts')
   const appDir = path.join(tmpDir, '.my-account-manager')
   beforeAll(() => {
-    if (fs.existsSync(tmpDir)) {
-      rimraf.sync(tmpDir)
-    }
-    mkdirs(appDir)
+    mkdirs(tmpDir)
   })
   afterAll(() => {
     rimraf.sync(tmpDir)
-  })
-  beforeEach(() => {
-    mkdirs(appDir)
   })
   afterEach(() => {
     rimraf.sync(appDir)
@@ -29,7 +23,6 @@ describe('Config', () => {
   const c = new Config(tmpDir)
 
   it('should create folder and empty file if none exists', () => {
-    rimraf.sync(appDir)
     expect(c.configFilePath).toEqual(path.join(appDir, 'config-DEV.json'))
     c.load();
     expect(c.props.storageFolder).toEqual('')
@@ -37,6 +30,7 @@ describe('Config', () => {
 
   it('should read file if it exists', () => {
     let props = { storageFolder: '/foo'}
+    mkdirs(appDir)
     fs.writeFileSync(path.join(appDir, 'config-DEV.json'), JSON.stringify(props), 'UTF-8')
     c.load()
     expect(c.props.storageFolder).toEqual('/foo')
