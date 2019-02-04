@@ -1,4 +1,4 @@
-import Formatter from '@/utils/formatter'
+import Formatter from '@/services/utils/formatter'
 
 const f = new Formatter()
 
