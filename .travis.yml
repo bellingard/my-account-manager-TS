@@ -5,6 +5,7 @@ node_js:
 
 script:
   - yarn test
+  - cat coverage/lcov.info | ./node_modules/.bin/coveralls
 
 branches:
   only:
