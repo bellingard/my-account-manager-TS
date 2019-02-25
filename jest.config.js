@@ -25,7 +25,7 @@ module.exports = {
     '**/services/**/*.{ts,js}'
   ],
   coverageDirectory: '<rootDir>/coverage',
-  // coverageReporters: ['text', 'json'],
+  coverageReporters: ['text', 'json', 'lcov'],
   testURL: 'http://localhost/',
   globals: {
     'ts-jest': {
