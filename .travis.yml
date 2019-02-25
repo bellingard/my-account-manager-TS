@@ -1,7 +1,7 @@
 language: node_js
 
-install:
-  - yarn install
+node_js:
+  - "10"
 
 script:
   - yarn test
@@ -9,3 +9,5 @@ script:
 branches:
   only:
     - master
+
+cache: yarn
