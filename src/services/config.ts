@@ -12,7 +12,7 @@ export interface ConfigProps {
 /*
  * Class to manage config of the app
  */
-export default class Config {
+export class Config {
   configFilePath:  string;
   props!: ConfigProps;
 
@@ -40,7 +40,7 @@ export default class Config {
     fs.writeFileSync(this.configFilePath, JSON.stringify(this.props), 'UTF-8')
   }
 
-  createEmptyConfig() {
+  private createEmptyConfig() {
     this.props = {
       storageFolder: ''
     }
