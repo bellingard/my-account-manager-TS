@@ -1,5 +1,6 @@
 import path from 'path'
 import { ConfigProps } from './config'
+import { Finder } from '../payees'
 const jsonfile = require('jsonfile')
 
 export default class Storage {
@@ -35,7 +36,7 @@ export default class Storage {
     return this.repository
   }
 
-  payeeFinders() {
+  payeeFinders(): Finder[] {
     return this.payeeFinderConf
   }
 
