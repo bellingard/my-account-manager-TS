@@ -1,7 +1,7 @@
 import path from 'path'
 import os from 'os'
 import fs from 'fs'
-import { Config } from '@/services/config'
+import { Config } from '@/services/utils/config'
 
 describe('Config Service', () => {
   // Prepare tmp dir

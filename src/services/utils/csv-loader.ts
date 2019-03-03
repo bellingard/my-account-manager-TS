@@ -73,27 +73,6 @@ export class CsvLoader {
       })
   }
 
-  static replaceEndLinesBySpace(item: string): string {
-    return item.replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ')
-  }
-
-  static revertDate(item: string): string {
-    return item.substr(6, 4) + '-' + item.substr(3, 2) + '-' + item.substr(0, 2)
-  }
-
-  static turnToCents(item: string): number | null {
-    return item === '' ? null : parseInt(item.replace(',', ''))
-  }
-
-  removeUselessChars(csvContent: string) {
-    let eurosPosition = csvContent.lastIndexOf('Euros;')
-    if (eurosPosition > 0) {
-      return csvContent.substr(eurosPosition + 'Euros;'.length, csvContent.length).trim()
-    } else {
-      return csvContent.trim()
-    }
-  }
-
   /**
    * Fixes the bad CSV to add ';' at the end of each line that starts with a .
    * @param {*} text the CSV content
@@ -110,5 +89,26 @@ export class CsvLoader {
       }
     })
     return goodCsv
+  }
+
+  private static replaceEndLinesBySpace(item: string): string {
+    return item.replace(/\r?\n|\r/g, ' ').replace(/\s+/g, ' ')
+  }
+
+  private static revertDate(item: string): string {
+    return item.substr(6, 4) + '-' + item.substr(3, 2) + '-' + item.substr(0, 2)
+  }
+
+  private static turnToCents(item: string): number | null {
+    return item === '' ? null : parseInt(item.replace(',', ''))
+  }
+
+  private removeUselessChars(csvContent: string) {
+    let eurosPosition = csvContent.lastIndexOf('Euros;')
+    if (eurosPosition > 0) {
+      return csvContent.substr(eurosPosition + 'Euros;'.length, csvContent.length).trim()
+    } else {
+      return csvContent.trim()
+    }
   }
 }

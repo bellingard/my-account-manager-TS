@@ -129,5 +129,5 @@ Retrait
 })
 
 function pathForFile(file: string): string {
-  return path.join(process.cwd(), 'tests', 'unit', 'services', '_csv-loader.spec', file)
+  return path.join(process.cwd(), 'tests', 'unit', 'services', 'utils', '_csv-loader.spec', file)
 }

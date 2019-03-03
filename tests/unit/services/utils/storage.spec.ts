@@ -1,6 +1,6 @@
 import path from 'path'
-import Storage from '@/services/storage'
-import { ConfigProps } from '@/services/config'
+import Storage from '@/services/utils/storage'
+import { ConfigProps } from '@/services/utils/config'
 
 describe('Storage Service', () => {
   it('Load and reload info from correct files', () => {
@@ -17,5 +17,5 @@ describe('Storage Service', () => {
 })
 
 function pathForFile(file: string): string {
-  return path.join(process.cwd(), 'tests', 'unit', 'services', '_storage.spec', file)
+  return path.join(process.cwd(), 'tests', 'unit', 'services', 'utils', '_storage.spec', file)
 }
