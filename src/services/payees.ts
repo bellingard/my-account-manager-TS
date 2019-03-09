@@ -1,4 +1,10 @@
+import * as _ from 'lodash'
 import Storage from './utils/storage'
+
+export interface Payee {
+  id: string
+  name: string
+}
 
 export interface Finder {
   expr: string
@@ -8,9 +14,40 @@ export interface Finder {
 
 export class Payees {
   private storage: Storage
+  private counter: number
 
   constructor(storage: Storage) {
     this.storage = storage
+    this.counter = storage.findNextCounter(this.list())
+  }
+
+  /**
+   * Returns the list of payees
+   */
+  list(): Payee[] {
+    return _.values(this.storage.repo().payees)
+  }
+
+  /**
+   * Returns the payee for the given ID if it exists.
+   * @param id
+   */
+  get(id: string): Payee | undefined {
+    return this.storage.repo().payees[id]
+  }
+
+  /**
+   * Adds a new payee with the given name
+   * @param payeeName
+   */
+  addPayee(payeeName: string): Payee {
+    let payeeId = this.nextPayeeID()
+    let payee = {
+      id: payeeId,
+      name: payeeName
+    }
+    this.storage.repo().payees[payeeId] = payee
+    return payee
   }
 
   /**
@@ -59,5 +96,13 @@ export class Payees {
       }
     }
     return null
+  }
+
+  private nextPayeeID() {
+    let nextCounter = this.counter
+    // increase the counter for next ID
+    this.counter++
+    // and return the new counter, with the appropriate format 'P3782034'
+    return 'P' + nextCounter
   }
 }

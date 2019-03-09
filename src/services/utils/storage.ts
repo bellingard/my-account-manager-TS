@@ -1,13 +1,19 @@
 import path from 'path'
+import * as _ from 'lodash'
 import { ConfigProps } from './config'
-import { Finder } from '../payees'
+import { Finder, Payee } from '../payees'
+import { Category } from '../category';
+import { Transaction } from '../transactions';
+import { Institution } from '../institutions';
+import { BankAccount } from '../bankaccount';
+import Repository from './repository';
 const jsonfile = require('jsonfile')
 
 export default class Storage {
   private config: ConfigProps
   private repoFile!: string
   private payeeFinderConfFile!: string
-  private repository: any
+  private repository!: Repository
   private payeeFinderConf: any
 
   constructor(config: ConfigProps) {
@@ -32,7 +38,10 @@ export default class Storage {
     this.payeeFinderConf = jsonfile.readFileSync(this.payeeFinderConfFile, 'UTF-8')
   }
 
-  repo() {
+  /**
+   * Returns the repository of entities
+   */
+  repo(): Repository {
     return this.repository
   }
 
@@ -103,4 +112,18 @@ export default class Storage {
       }
     })
   }
+
+  /**
+   * Finds what is the next counter/index ID for the given list
+   * @param list 
+   */
+  findNextCounter(list: (Payee | Category | Transaction)[]): number {
+    let maxId: any = _.chain(list)
+      // we map the ID - which is like "T5922" - to an integer
+      .map((t: (Payee | Category | Transaction)) => parseInt(t.id.substring(1)) * 1)
+      .max()
+      .value()
+    return maxId + 1
+  }
+
 }
