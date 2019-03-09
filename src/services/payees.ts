@@ -13,7 +13,7 @@ export interface Finder {
 }
 
 export class Payees {
-  private storage: Storage
+  private readonly storage: Storage
   private counter: number
 
   constructor(storage: Storage) {
@@ -41,8 +41,8 @@ export class Payees {
    * @param payeeName
    */
   addPayee(payeeName: string): Payee {
-    let payeeId = this.nextPayeeID()
-    let payee = {
+    const payeeId = this.nextPayeeID()
+    const payee = {
       id: payeeId,
       name: payeeName
     }
@@ -99,7 +99,7 @@ export class Payees {
   }
 
   private nextPayeeID() {
-    let nextCounter = this.counter
+    const nextCounter = this.counter
     // increase the counter for next ID
     this.counter++
     // and return the new counter, with the appropriate format 'P3782034'

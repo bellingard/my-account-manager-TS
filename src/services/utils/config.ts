@@ -13,13 +13,13 @@ export interface ConfigProps {
  * Class to manage config of the app
  */
 export class Config {
-  configFilePath:  string;
+  readonly configFilePath:  string;
   props!: ConfigProps;
 
-  private configFolderPath:  string;
+  private readonly configFolderPath:  string;
 
   constructor(homedir: string) {
-    let devSuffix = process.env.NODE_ENV === 'production' ? '' : '-DEV'
+    const devSuffix = process.env.NODE_ENV === 'production' ? '' : '-DEV'
     this.configFolderPath = path.join(homedir, '.my-account-manager')
     this.configFilePath = path.join(this.configFolderPath, `config${devSuffix}.json`)
   }

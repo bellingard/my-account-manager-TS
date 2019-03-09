@@ -18,7 +18,7 @@ export class CsvLoader {
     csvFilePath: string,
     cb: (transactions: CsvTransaction[] | null, error: Error | null) => void
   ) {
-    let content = fs.readFileSync(csvFilePath, 'latin1')
+    const content = fs.readFileSync(csvFilePath, 'latin1')
     return this.extractTransactions(content, cb)
   }
 
@@ -36,8 +36,8 @@ export class CsvLoader {
    * @param {*} cb(transactions, err)
    */
   extractTransactions(csvContent: string, cb: (transactions: CsvTransaction[] | null, error: Error | null) => void) {
-    let contentToParse = this.removeUselessChars(csvContent)
-    let transactions: CsvTransaction[] = []
+    const contentToParse = this.removeUselessChars(csvContent)
+    const transactions: CsvTransaction[] = []
 
     Converter({
       headers: ['date', 'label', 'debit', 'credit', 'other'],
@@ -45,16 +45,16 @@ export class CsvLoader {
       delimiter: ';',
       includeColumns: [0, 1, 2, 3],
       colParser: {
-        date: function(item: string, head: string, resultRow: any, row: any, colIdx: number): string {
+        date(item: string, head: string, resultRow: any, row: any, colIdx: number): string {
           return CsvLoader.revertDate(item)
         },
-        label: function(item: string, head: string, resultRow: any, row: any, colIdx: number): string {
+        label(item: string, head: string, resultRow: any, row: any, colIdx: number): string {
           return CsvLoader.replaceEndLinesBySpace(item)
         },
-        debit: function(item: string, head: string, resultRow: any, row: any, colIdx: number): number | null {
+        debit(item: string, head: string, resultRow: any, row: any, colIdx: number): number | null {
           return CsvLoader.turnToCents(item)
         },
-        credit: function(item: string, head: string, resultRow: any, row: any, colIdx: number): number | null {
+        credit(item: string, head: string, resultRow: any, row: any, colIdx: number): number | null {
           return CsvLoader.turnToCents(item)
         }
       },
@@ -79,9 +79,9 @@ export class CsvLoader {
    */
   addMissingSemiColon(text: string) {
     let goodCsv = ''
-    let lines = text.split('\n')
+    const lines = text.split('\n')
     lines.forEach(line => {
-      let l = line.trim()
+      const l = line.trim()
       if (l.startsWith('.')) {
         goodCsv += l.substr(1) + ';\n'
       } else {
@@ -96,7 +96,7 @@ export class CsvLoader {
   }
 
   private static revertDate(item: string): string {
-    return item.substr(6, 4) + '-' + item.substr(3, 2) + '-' + item.substr(0, 2)
+    return `${item.substr(6, 4)}-${item.substr(3, 2)}-${item.substr(0, 2)}`
   }
 
   private static turnToCents(item: string): number | null {
@@ -104,7 +104,7 @@ export class CsvLoader {
   }
 
   private removeUselessChars(csvContent: string) {
-    let eurosPosition = csvContent.lastIndexOf('Euros;')
+    const eurosPosition = csvContent.lastIndexOf('Euros;')
     if (eurosPosition > 0) {
       return csvContent.substr(eurosPosition + 'Euros;'.length, csvContent.length).trim()
     } else {

@@ -10,7 +10,7 @@ import Repository from './repository';
 const jsonfile = require('jsonfile')
 
 export default class Storage {
-  private config: ConfigProps
+  private readonly config: ConfigProps
   private repoFile!: string
   private payeeFinderConfFile!: string
   private repository!: Repository
@@ -30,7 +30,7 @@ export default class Storage {
    */
   private init() {
     // Base storage folder
-    let storageFolder = this.config.storageFolder
+    const storageFolder = this.config.storageFolder
     this.repoFile = path.join(storageFolder, 'Comptes.json')
     this.payeeFinderConfFile = path.join(storageFolder, 'PayeeFinder.json')
     // Let's read the storage files
@@ -118,7 +118,7 @@ export default class Storage {
    * @param list 
    */
   findNextCounter(list: (Payee | Category | Transaction)[]): number {
-    let maxId: any = _.chain(list)
+    const maxId: any = _.chain(list)
       // we map the ID - which is like "T5922" - to an integer
       .map((t: (Payee | Category | Transaction)) => parseInt(t.id.substring(1)) * 1)
       .max()

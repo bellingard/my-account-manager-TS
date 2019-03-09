@@ -7,7 +7,7 @@ export interface Institution {
 }
 
 export class Institutions {
-  private storage: Storage
+  private readonly storage: Storage
 
   constructor(storage: Storage) {
     this.storage = storage
