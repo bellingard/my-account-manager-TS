@@ -90,7 +90,7 @@ export class Payees {
    * @param {*} label
    */
   findBasedOnLabel(label: string): Finder | null {
-    for (let finder of this.finders()) {
+    for (const finder of this.finders()) {
       if (label.search(finder.expr) >= 0) {
         return finder
       }

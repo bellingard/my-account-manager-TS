@@ -6,7 +6,7 @@ import { Category } from '../categories';
 import { Transaction } from '../transactions';
 import { Institution } from '../institutions';
 import { BankAccount } from '../bankaccount';
-import Repository from './repository';
+import Repository, { RepositoryTypes } from './repository';
 const jsonfile = require('jsonfile')
 
 export default class Storage {
@@ -117,10 +117,10 @@ export default class Storage {
    * Finds what is the next counter/index ID for the given list
    * @param list 
    */
-  findNextCounter(list: (Payee | Category | BankAccount | Transaction)[]): number {
+  findNextCounter(list: RepositoryTypes[]): number {
     const maxId: any = _.chain(list)
       // we map the ID - which is like "T5922" - to an integer
-      .map((t: (Payee | Category | BankAccount |Transaction)) => parseInt(t.id.substring(1)) * 1)
+      .map((t: RepositoryTypes) => parseInt(t.id.substring(1)) * 1)
       .max()
       .value()
     return maxId + 1

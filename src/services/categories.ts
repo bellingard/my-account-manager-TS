@@ -23,7 +23,7 @@ export class Categories {
    * Returns the list of categories
    * @param listHidden if true, lists all the categories, even the hidden (not used any longer) ones
    */
-  list(listHidden: boolean = false): Category[] {
+  list(listHidden = false): Category[] {
     const categories = _.values(this.storage.repo().categories)
     return _.chain(categories)
       .filter(a => (listHidden ? true : !a.hidden))
@@ -64,7 +64,7 @@ export class Categories {
   }
 
   private nextCategoryID() {
-    let nextCounter = this.counter
+    const nextCounter = this.counter
     // increase the counter for next ID
     this.counter++
     // and return the new counter, with the appropriate format 'P3782034'
