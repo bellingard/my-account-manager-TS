@@ -1,7 +1,7 @@
 import { Institution } from '../institutions';
 import { Payee } from '../payees';
 import { BankAccount } from '../bankaccount';
-import { Category } from '../category';
+import { Category } from '../categories';
 import { Transaction } from 'electron';
 
 export default interface Repository {

@@ -2,7 +2,7 @@ import path from 'path'
 import * as _ from 'lodash'
 import { ConfigProps } from './config'
 import { Finder, Payee } from '../payees'
-import { Category } from '../category';
+import { Category } from '../categories';
 import { Transaction } from '../transactions';
 import { Institution } from '../institutions';
 import { BankAccount } from '../bankaccount';
@@ -117,10 +117,10 @@ export default class Storage {
    * Finds what is the next counter/index ID for the given list
    * @param list 
    */
-  findNextCounter(list: (Payee | Category | Transaction)[]): number {
+  findNextCounter(list: (Payee | Category | BankAccount | Transaction)[]): number {
     const maxId: any = _.chain(list)
       // we map the ID - which is like "T5922" - to an integer
-      .map((t: (Payee | Category | Transaction)) => parseInt(t.id.substring(1)) * 1)
+      .map((t: (Payee | Category | BankAccount |Transaction)) => parseInt(t.id.substring(1)) * 1)
       .max()
       .value()
     return maxId + 1

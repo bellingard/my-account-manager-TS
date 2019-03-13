@@ -44,7 +44,7 @@ describe('Payees', () => {
   })
 
   it('should add new payee', () => {
-    let newPayee = payees.addPayee('New Payee')
+    const newPayee = payees.addPayee('New Payee')
     expect(newPayee).toEqual({ id: 'P546', name: 'New Payee' })
     expect(payees.list().length).toEqual(4)
     expect(payees.list()).toEqual(expect.arrayContaining([newPayee]))

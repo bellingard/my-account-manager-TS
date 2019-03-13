@@ -15,8 +15,6 @@ export default class Repo {
     if (this.isLoaded()) {
       this.counters = {}
       this.counters.transaction = this.findNextCounter(this.transactions())
-      // categories and bank accounts share the same pattern for ID (this comes from KMyMoney)
-      this.counters.category = this.findNextCounter(this.categories().concat(this.bankAccounts(true)))
     }
   }
 
@@ -26,14 +24,6 @@ export default class Repo {
     this.counters.transaction++
     // and return the new counter, with the appropriate format 'T3782034'
     return 'T' + nextCounter
-  }
-
-  nextCategoryID() {
-    let nextCounter = this.counters.category
-    // increase the counter for next ID
-    this.counters.category++
-    // and return the new counter, with the appropriate format 'P3782034'
-    return 'A' + nextCounter
   }
 
   isLoaded() {
@@ -51,18 +41,6 @@ export default class Repo {
 
   bankAccount(id) {
     return this.storage.repo.bankAccounts[id]
-  }
-
-  categories(listHidden = false) {
-    let categories = _.values(this.storage.repo.categories)
-    return _.chain(categories)
-      .sortBy(['name'])
-      .filter(a => (listHidden ? true : !a.hidden))
-      .value()
-  }
-
-  category(id) {
-    return this.storage.repo.categories[id]
   }
 
   transactions() {
@@ -98,25 +76,6 @@ export default class Repo {
     let isFavorite = this.bankAccount(accountId).favorite
     this.bankAccount(accountId).favorite = !isFavorite
     return !isFavorite
-  }
-
-  addCategory(categoryName, parentCategoryId) {
-    // let's create the new category
-    let catId = this.nextCategoryID()
-    let category = {
-      id: catId,
-      name: categoryName,
-      parentId: parentCategoryId
-    }
-    this.storage.repo.categories[catId] = category
-    // we also need to reference this category in its parent too
-    let parentCategory = this.storage.repo.categories[parentCategoryId]
-    if (!parentCategory.subAccountIds) {
-      parentCategory.subAccountIds = []
-    }
-    parentCategory.subAccountIds.push(catId)
-    // and finally return the category
-    return category
   }
 
   deleteTransaction(transaction) {

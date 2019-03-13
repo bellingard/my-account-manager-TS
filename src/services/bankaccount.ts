@@ -7,3 +7,7 @@ export interface BankAccount {
   institutionId: string
   parentId: string
 }
+
+// TODO => Move bank account ID on the format Bxxxx to make our life easier
+//      => And therefore make some sanity check to be sure that the data has been migrated
+
