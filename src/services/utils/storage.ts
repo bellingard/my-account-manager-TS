@@ -5,7 +5,7 @@ import { Finder, Payee } from '../payees'
 import { Category } from '../categories';
 import { Transaction } from '../transactions';
 import { Institution } from '../institutions';
-import { BankAccount } from '../bankaccount';
+import { BankAccount } from '../bankaccounts';
 import Repository, { RepositoryTypes } from './repository';
 const jsonfile = require('jsonfile')
 

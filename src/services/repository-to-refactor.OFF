@@ -31,18 +31,6 @@ export default class Repo {
   }
 
 
-  bankAccounts(listClosed = false) {
-    let accounts = _.values(this.storage.repo.bankAccounts)
-    return _.chain(accounts)
-      .sortBy(['name'])
-      .filter(a => (listClosed ? true : !a.closed))
-      .value()
-  }
-
-  bankAccount(id) {
-    return this.storage.repo.bankAccounts[id]
-  }
-
   transactions() {
     return _.values(this.storage.repo.transactions)
   }
@@ -72,11 +60,7 @@ export default class Repo {
     return this.bankAccount(transaction.toId) != null && this.bankAccount(transaction.fromId) != null
   }
 
-  changeFavorite(accountId) {
-    let isFavorite = this.bankAccount(accountId).favorite
-    this.bankAccount(accountId).favorite = !isFavorite
-    return !isFavorite
-  }
+
 
   deleteTransaction(transaction) {
     delete this.storage.repo.transactions[transaction.id]

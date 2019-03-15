@@ -1,6 +1,6 @@
 import { Institution } from '../institutions'
 import { Payee } from '../payees'
-import { BankAccount } from '../bankaccount'
+import { BankAccount } from '../bankaccounts'
 import { Category } from '../categories'
 import { Transaction } from '../transactions'
 

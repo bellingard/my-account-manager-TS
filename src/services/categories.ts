@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import Storage from './utils/storage';
+import Storage from './utils/storage'
 
 export interface Category {
   id: string
@@ -38,7 +38,6 @@ export class Categories {
     return this.storage.repo().categories[id]
   }
 
-
   /**
    * Adds a new category with the given name and a parent category
    * @param categoryName
@@ -70,5 +69,4 @@ export class Categories {
     // and return the new counter, with the appropriate format 'P3782034'
     return 'A' + nextCounter
   }
-
 }
