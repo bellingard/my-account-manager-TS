@@ -1,0 +1,31 @@
+{
+  "files.exclude": {
+    "**/.vscode": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "dist": true,
+    "**/.env.local": true,
+    "**/.env.*.local": true,
+    "**/npm-debug.log*": true,
+    "**/yarn-debug.log*": true,
+    "**/yarn-error.log*": true,
+    "**/.idea": true,
+    "**/*.suo": true,
+    "**/*.ntvs*": true,
+    "**/*.njsproj": true,
+    "**/*.sln": true,
+    "**/*.sw*": true,
+    "**/.scannerwork": true,
+    "**/.sonarlint": true,
+    "dist_electron": true,
+    "coverage": true
+  },
+  "prettier.semi": false,
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true,
+  "editor.tabSize": 2,
+  "sonarlint.connectedMode.project": {
+    "serverId": "my_personal_org_in_sonarcloud",
+    "projectKey": "bellingard_my-account-manager-TS"
+  }
+}
