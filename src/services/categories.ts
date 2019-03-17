@@ -34,7 +34,7 @@ export class Categories {
    * Returns the category for the given ID if it exists.
    * @param id
    */
-  get(id: string): Category | undefined {
+  get(id: string): Category {
     return this.storage.repo().categories[id]
   }
 

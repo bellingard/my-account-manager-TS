@@ -24,12 +24,12 @@ describe('Config Service', () => {
 
   it('should create folder and empty file if none exists', () => {
     expect(c.configFilePath).toEqual(path.join(appDir, 'config-DEV.json'))
-    c.load();
+    c.load()
     expect(c.props.storageFolder).toEqual('')
   })
 
   it('should read file if it exists', () => {
-    let props = { storageFolder: '/foo'}
+    const props = { storageFolder: '/foo' }
     mkdirs(appDir)
     fs.writeFileSync(path.join(appDir, 'config-DEV.json'), JSON.stringify(props), 'UTF-8')
     c.load()

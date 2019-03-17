@@ -32,7 +32,7 @@ export class Payees {
    * Returns the payee for the given ID if it exists.
    * @param id
    */
-  get(id: string): Payee | undefined {
+  get(id: string): Payee {
     return this.storage.repo().payees[id]
   }
 

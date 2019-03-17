@@ -13,10 +13,10 @@ export interface ConfigProps {
  * Class to manage config of the app
  */
 export class Config {
-  readonly configFilePath:  string;
-  props!: ConfigProps;
+  readonly configFilePath: string
+  props!: ConfigProps
 
-  private readonly configFolderPath:  string;
+  private readonly configFolderPath: string
 
   constructor(homedir: string) {
     const devSuffix = process.env.NODE_ENV === 'production' ? '' : '-DEV'

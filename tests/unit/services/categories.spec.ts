@@ -46,8 +46,8 @@ describe('Categories', () => {
     expect(newCat).toEqual({ id: 'A61', name: 'Travel', parentId: 'A1' })
     expect(categories.list(true).length).toEqual(6)
     expect(categories.list()).toEqual(expect.arrayContaining([newCat]))
-    let parentCat = categories.get('A1')
-    expect(parentCat!.subAccountIds).toEqual(expect.arrayContaining(['A61']))
+    const parentCat = categories.get('A1')
+    expect(parentCat.subAccountIds).toEqual(expect.arrayContaining(['A61']))
 
     // and now let's add a category with a parent which does not have sub accounts yet
     newCat = categories.addCategory('Business Travel', 'A61')

@@ -2,11 +2,11 @@ import path from 'path'
 import * as _ from 'lodash'
 import { ConfigProps } from './config'
 import { Finder, Payee } from '../payees'
-import { Category } from '../categories';
-import { Transaction } from '../transactions';
-import { Institution } from '../institutions';
-import { BankAccount } from '../bankaccounts';
-import Repository, { RepositoryTypes } from './repository';
+import { Category } from '../categories'
+import { Transaction } from '../transactions'
+import { Institution } from '../institutions'
+import { BankAccount } from '../bankaccounts'
+import Repository, { RepositoryTypes } from './repository'
 const jsonfile = require('jsonfile')
 
 export default class Storage {
@@ -115,7 +115,7 @@ export default class Storage {
 
   /**
    * Finds what is the next counter/index ID for the given list
-   * @param list 
+   * @param list
    */
   findNextCounter(list: RepositoryTypes[]): number {
     const maxId: any = _.chain(list)
@@ -125,5 +125,4 @@ export default class Storage {
       .value()
     return maxId + 1
   }
-
 }

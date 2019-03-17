@@ -62,8 +62,8 @@ describe('BankAccounts', () => {
 
   it('should switch', () => {
     const account = bankAccounts.get('B1')
-    expect(account!.favorite).toEqual(false)
+    expect(account.favorite).toEqual(false)
     bankAccounts.switchFavorite('B1')
-    expect(account!.favorite).toEqual(true)
+    expect(account.favorite).toEqual(true)
   })
 })

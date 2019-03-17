@@ -4,12 +4,12 @@ const f = new Formatter()
 
 describe('Formatter', () => {
   it('should return year', () => {
-    let date = '2017-08-14'
+    const date = '2017-08-14'
     expect(f.year(date)).toEqual('2017')
   })
 
   it('should return date in year', () => {
-    let date = '2017-08-14'
+    const date = '2017-08-14'
     expect(f.dateInYear(date)).toEqual('14 Août')
   })
 
@@ -18,8 +18,8 @@ describe('Formatter', () => {
   })
 
   it('should provide color for amount', () => {
-    let red = 'red--text'
-    let green = 'green--text'
+    const red = 'red--text'
+    const green = 'green--text'
     expect(f.colorForAmount(1)).toEqual(green)
     expect(f.colorForAmount(-1)).toEqual(red)
   })

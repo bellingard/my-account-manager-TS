@@ -8,7 +8,7 @@ export default class Formatter {
   }
 
   dateInYear(date: string) {
-    return date.substring(8, 10) + ' ' + this.month(date)
+    return `${date.substring(8, 10)} ${this.month(date)}`
   }
 
   // Displays amounts (that are stored multiplied by 100) with 2 decimals
@@ -57,7 +57,7 @@ export default class Formatter {
 
   // Returns the path to the logo of the institution which ID is passed
   institutionIcon(id: string) {
-    return 'static/institutions/' + id + '.png'
+    return `static/institutions/${id}.png`
   }
 
   // Returns the name of the payee based on its ID
@@ -86,8 +86,8 @@ export default class Formatter {
   //   }
   // }
 
-  month(date: string) {
-    let m = date.substring(5, 7)
+  month(date: string): string {
+    const m = date.substring(5, 7)
     switch (m) {
       case '01':
         return 'Janvier'
@@ -113,6 +113,8 @@ export default class Formatter {
         return 'Novembre'
       case '12':
         return 'Décembre'
+      default:
+        return 'Unknown Month...'
     }
   }
 }

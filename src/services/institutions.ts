@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import Storage from './utils/storage';
+import Storage from './utils/storage'
 
 export interface Institution {
   id: string
@@ -24,8 +24,7 @@ export class Institutions {
    * Returns the institution for the given ID if it exists.
    * @param id
    */
-  get(id: string): Institution | undefined {
+  get(id: string): Institution {
     return this.storage.repo().institutions[id]
   }
-
 }

@@ -5,7 +5,7 @@ describe('CsvLoader Service', () => {
   const csvLoader = new CsvLoader()
 
   it('should parse correct CSV string - DEBIT', done => {
-    let csvString = `
+    const csvString = `
   Foo Bar Thing
   
   Date;Libellé;Débit Euros;Crédit Euros;
@@ -34,7 +34,7 @@ describe('CsvLoader Service', () => {
   })
 
   it('should parse correct CSV string - CREDIT', done => {
-    let csvString = `
+    const csvString = `
 Foo Bar Thing
 
 Date;Libellé;Débit Euros;Crédit Euros;
@@ -63,7 +63,7 @@ Retrait Au Distributeur
   })
 
   it('should handle error when parsing wrong CSV string', done => {
-    let csvString = `
+    const csvString = `
 Date;Libellé;Débit Euros;Crédit Euros;
 14/09/2017;"My City -    07/09 10h41 
 Retrait 

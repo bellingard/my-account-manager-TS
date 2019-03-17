@@ -28,7 +28,7 @@ export class BankAccounts {
    * @param listClosed if true, lists all the bank accounts, even the closed ones
    */
   list(listClosed = false) {
-    let accounts = _.values(this.storage.repo().bankAccounts)
+    const accounts = _.values(this.storage.repo().bankAccounts)
     return _.chain(accounts)
       .filter(a => (listClosed ? true : !a.closed))
       .value()
@@ -38,7 +38,7 @@ export class BankAccounts {
    * Returns the bank account for the given ID if it exists.
    * @param id
    */
-  get(id: string): BankAccount | undefined {
+  get(id: string): BankAccount {
     return this.storage.repo().bankAccounts[id]
   }
 
@@ -48,8 +48,8 @@ export class BankAccounts {
    */
   switchFavorite(id: string): boolean {
     const account = this.get(id)
-    const newValue = !account!.favorite
-    account!.favorite = newValue
+    const newValue = !account.favorite
+    account.favorite = newValue
     return newValue
   }
 }
