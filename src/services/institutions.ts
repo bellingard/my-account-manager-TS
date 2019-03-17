@@ -10,7 +10,7 @@ export class Institutions {
   private readonly storage: Storage
 
   constructor(storage: Storage) {
-    this.storage = storage
+    this.storage = storage;;
   }
 
   /**
