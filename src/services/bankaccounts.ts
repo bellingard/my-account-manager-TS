@@ -39,6 +39,10 @@ export class BankAccounts {
    * @param id
    */
   get(id: string): BankAccount {
+    if (false) {
+      // Do something not covered
+      let i = 1;
+    }
     return this.storage.repo().bankAccounts[id]
   }
 
