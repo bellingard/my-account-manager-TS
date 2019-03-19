@@ -1,11 +1,6 @@
 import * as _ from 'lodash'
 
 export default class Repo {
-  constructor(storage, payeeFinder) {
-    this.storage = storage
-    this.payeeFinder = payeeFinder
-    this.init()
-  }
 
   /**
    * Initialize the repo:
@@ -14,16 +9,7 @@ export default class Repo {
   init() {
     if (this.isLoaded()) {
       this.counters = {}
-      this.counters.transaction = this.findNextCounter(this.transactions())
     }
-  }
-
-  nextTransactionID() {
-    let nextCounter = this.counters.transaction
-    // increase the counter for next ID
-    this.counters.transaction++
-    // and return the new counter, with the appropriate format 'T3782034'
-    return 'T' + nextCounter
   }
 
   isLoaded() {
@@ -31,21 +17,9 @@ export default class Repo {
   }
 
 
-  transactions() {
-    return _.values(this.storage.repo.transactions)
-  }
 
-  transactionsForAccount(accountId) {
-    return _.chain(this.transactions())
-      .filter(t => accountId === t.fromId || accountId === t.toId)
-      .value()
-  }
 
-  transactionsForCategory(categoryId) {
-    return _.chain(this.transactions())
-      .filter(t => categoryId === t.fromId)
-      .value()
-  }
+// IN ACCOUNTS
 
   getAccountBalance(accountId) {
     return _.chain(this.transactions())
@@ -55,30 +29,9 @@ export default class Repo {
       .value()
   }
 
-  // Tells whether the transaction is a transfer or not
-  isTransfer(transaction) {
-    return this.bankAccount(transaction.toId) != null && this.bankAccount(transaction.fromId) != null
-  }
 
 
-
-  deleteTransaction(transaction) {
-    delete this.storage.repo.transactions[transaction.id]
-  }
-
-  addStagedTransaction(date, amount, toId, fromId, payeeId, label) {
-    let transactionId = this.nextTransactionID()
-    this.storage.repo.transactions[transactionId] = {
-      id: transactionId,
-      date: date,
-      amount: amount,
-      toId: toId,
-      fromId: fromId,
-      payeeId: payeeId,
-      desc: '',
-      stagedDesc: label
-    }
-  }
+// IN STORAGE?
 
   /**
    * Returns true if some staged transactions have not been categorized yet.
@@ -92,62 +45,5 @@ export default class Repo {
     return false
   }
 
-  /**
-   * Confirms that all transactions can be saved
-   */
-  unstageAllTransactions() {
-    this.transactions().forEach(t => {
-      if (t.stagedDesc) {
-        delete t.stagedDesc
-      }
-    })
-  }
 
-  /**
-   * Synchronises transactions retrieved from a CSV file. (see CsvLoader)
-   * @param {*} accountId the account to add transactions to
-   * @param {*} basicTransactions the CSV-format transactions
-   */
-  synchronizeTransactions(accountId, basicTransactions) {
-    basicTransactions.forEach(t => {
-      let amount = t.credit == null ? -t.debit : t.credit
-      let payee = ''
-      let category = ''
-      let finder = this.payeeFinder.findBasedOnLabel(t.label)
-      if (finder != null) {
-        payee = finder.payee
-        category = finder.cat
-      }
-      this.addStagedTransaction(t.date, amount, accountId, category, payee, t.label)
-    })
-  }
-
-  /**
-   * Replaces a card payment entry by transactions retrieved from a CSV file
-   * @param {*} accountId the account on which the transaction applies
-   * @param {*} transactionToReplace the card payment transaction to replace
-   * @param {*} basicTransactions Transactions that will replace the card payment transaction
-   * @param {*} cb the callback if there's an error
-   */
-  replaceCardPayments(accountId, transactionToReplace, basicTransactions, cb) {
-    let transactionsAmount = _.chain(basicTransactions)
-      .map(t => (t.credit == null ? -t.debit : t.credit))
-      .reduce((a, b) => a + b, 0)
-      .value()
-    if (transactionsAmount === transactionToReplace.amount) {
-      // Perfect, the amounts match: we can replace the given transaction to replace by all the given transactions
-      this.synchronizeTransactions(accountId, basicTransactions)
-      this.deleteTransaction(transactionToReplace)
-      cb()
-    } else {
-      // we can't replace, let's return an error
-      cb(
-        new Error(
-          `The sum of the transactions (${transactionsAmount}) does not match the sum of card payments (${
-            transactionToReplace.amount
-          }).`
-        )
-      )
-    }
-  }
 }

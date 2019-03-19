@@ -24,7 +24,7 @@ const institutions = new Institutions(new Storage({ storageFolder: '' }))
 
 describe('Institutions', () => {
   it('should list institutions', () => {
-    expect(institutions.list().length).toEqual(3)
+    expect(institutions.list()).toHaveLength(3)
   })
 
   it('should get institution from ID', () => {

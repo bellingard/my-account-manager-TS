@@ -66,7 +66,7 @@ export class Categories {
     const nextCounter = this.counter
     // increase the counter for next ID
     this.counter++
-    // and return the new counter, with the appropriate format 'P3782034'
+    // and return the new counter, with the appropriate format 'A3782034'
     return 'A' + nextCounter
   }
 }

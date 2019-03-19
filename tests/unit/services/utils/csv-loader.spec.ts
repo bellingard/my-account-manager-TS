@@ -16,7 +16,7 @@ describe('CsvLoader Service', () => {
   `
     csvLoader.extractTransactions(csvString, (transactions, err) => {
       expect(transactions).not.toBeNull()
-      expect(transactions!.length).toEqual(1)
+      expect(transactions!).toHaveLength(1)
       expect(transactions![0]).toEqual({
         date: '2017-09-14',
         label: 'My City - 07/09 10h41 Retrait Au Distributeur ',
@@ -45,7 +45,7 @@ Retrait Au Distributeur
 `
     csvLoader.extractTransactions(csvString, (transactions, err) => {
       expect(transactions).not.toBeNull()
-      expect(transactions!.length).toEqual(1)
+      expect(transactions!).toHaveLength(1)
       expect(transactions![0]).toEqual({
         date: '2017-09-14',
         label: 'My City - 07/09 10h41 Retrait Au Distributeur ',
@@ -90,7 +90,7 @@ Retrait
     // and now check that the result can be parsed
     csvLoader.extractTransactions(csvString, (transactions, err) => {
       expect(transactions).not.toBeNull()
-      expect(transactions!.length).toEqual(2)
+      expect(transactions!).toHaveLength(2)
       expect(transactions![0]).toEqual({
         date: '2017-09-22',
         label: 'La Bolee ',
@@ -110,7 +110,7 @@ Retrait
   it('should parse file', done => {
     csvLoader.getTransactionsFromFile(pathForFile('sample.csv'), (transactions, err) => {
       expect(transactions).not.toBeNull()
-      expect(transactions!.length).toEqual(5)
+      expect(transactions!).toHaveLength(5)
       expect(transactions![0]).toEqual({
         date: '2017-09-08',
         label: 'My City - 07/09 10h41 Retrait Au Distributeur ',

@@ -24,6 +24,14 @@ export class BankAccounts {
   }
 
   /**
+   * Returns true if the given ID starts with 'B'
+   * @param id
+   */
+  static isValidID(id: string): boolean {
+    return id.startsWith('B')
+  }
+
+  /**
    * Returns the list of bank accounts
    * @param listClosed if true, lists all the bank accounts, even the closed ones
    */

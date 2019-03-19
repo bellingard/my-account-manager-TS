@@ -35,7 +35,7 @@ const payees = new Payees(new Storage({ storageFolder: '' }))
 
 describe('Payees', () => {
   it('should list payees', () => {
-    expect(payees.list().length).toEqual(3)
+    expect(payees.list()).toHaveLength(3)
   })
 
   it('should get payee from ID', () => {
@@ -46,7 +46,7 @@ describe('Payees', () => {
   it('should add new payee', () => {
     const newPayee = payees.addPayee('New Payee')
     expect(newPayee).toEqual({ id: 'P546', name: 'New Payee' })
-    expect(payees.list().length).toEqual(4)
+    expect(payees.list()).toHaveLength(4)
     expect(payees.list()).toEqual(expect.arrayContaining([newPayee]))
   })
 
@@ -71,7 +71,7 @@ describe('Payees', () => {
 
   it('should add payee finder', () => {
     payees.addFinder('P4', 'foo', 'C40')
-    expect(payees.finders().length).toEqual(4)
+    expect(payees.finders()).toHaveLength(4)
     expect(payees.finders()[3]).toEqual({ expr: 'foo', payee: 'P4', cat: 'C40' })
   })
 })

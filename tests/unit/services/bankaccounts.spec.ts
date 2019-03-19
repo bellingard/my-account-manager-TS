@@ -38,13 +38,18 @@ jest.mock('@/services/utils/storage', () => {
 const bankAccounts = new BankAccounts(new Storage({ storageFolder: '' }))
 
 describe('BankAccounts', () => {
+  it('should tell valid ID', () => {
+    expect(BankAccounts.isValidID('B123')).toEqual(true)
+    expect(BankAccounts.isValidID('A123')).toEqual(false)
+  })
+
   it('should list non closed accounts by default', () => {
-    expect(bankAccounts.list().length).toEqual(1)
+    expect(bankAccounts.list()).toHaveLength(1)
     expect(bankAccounts.list()[0].id).toEqual('B164')
   })
 
   it('should be able to list all accounts', () => {
-    expect(bankAccounts.list(true).length).toEqual(2)
+    expect(bankAccounts.list(true)).toHaveLength(2)
   })
 
   it('should get account from ID', () => {
