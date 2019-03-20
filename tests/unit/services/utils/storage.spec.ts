@@ -44,13 +44,6 @@ describe('Storage Service', () => {
     expect(storage.payeeFinders()).toBeUndefined()
   })
 
-  it('should raise error when old bank account or category format', () => {
-    const config: ConfigProps = { storageFolder: pathForFile('old_format') }
-    const storage: Storage = new Storage(config)
-    expect(storage.repo()).toBeUndefined()
-    expect(storage.payeeFinders()).toBeUndefined()
-  })
-
   it('should find the next counter', () => {
     const config: ConfigProps = { storageFolder: pathForFile('can_load') }
     const storage: Storage = new Storage(config)
