@@ -1,5 +1,7 @@
 import { BankAccounts, BankAccount } from '@/services/bankaccounts'
 import Storage from '@/services/utils/storage'
+import { Transactions } from '@/services/transactions'
+import { Payees } from '@/services/payees'
 
 // Mock Storage
 const mockRepo = {
@@ -22,6 +24,12 @@ const mockRepo = {
       name: 'Account B164',
       parentId: 'A170'
     }
+  },
+  transactions: {
+    T1000: { amount: -4651, date: '2012-02-02', desc: '', fromId: 'A22', id: 'T1000', payeeId: 'P40', toId: 'B1' },
+    T1001: { amount: 1166, date: '2012-02-03', desc: '', fromId: 'A87', id: 'T1001', payeeId: 'P13', toId: 'B164' },
+    T1002: { amount: -2618, date: '2012-02-03', desc: '', fromId: 'A22', id: 'T1002', payeeId: 'P13', toId: 'B164' },
+    T1003: { amount: 1000, date: '2012-02-06', desc: '', fromId: 'B164', id: 'T1003', payeeId: 'P47', toId: 'B1' }
   }
 }
 jest.mock('@/services/utils/storage', () => {
@@ -29,13 +37,18 @@ jest.mock('@/services/utils/storage', () => {
     return {
       repo: () => {
         return mockRepo
+      },
+      findNextCounter: () => {
+        return 1
       }
     }
   })
 })
 
 // And start the tests
-const bankAccounts = new BankAccounts(new Storage({ storageFolder: '' }))
+const storage = new Storage({ storageFolder: '' })
+const transactions = new Transactions(storage, new Payees(storage))
+const bankAccounts = new BankAccounts(storage, transactions)
 
 describe('BankAccounts', () => {
   it('should tell valid ID', () => {
@@ -70,5 +83,10 @@ describe('BankAccounts', () => {
     expect(account.favorite).toEqual(false)
     bankAccounts.switchFavorite('B1')
     expect(account.favorite).toEqual(true)
+  })
+
+  it('should compute balance', () => {
+    expect(bankAccounts.getAccountBalance('B1')).toEqual(-3651)
+    expect(bankAccounts.getAccountBalance('B164')).toEqual(-2452)
   })
 })

@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
 import Storage from './utils/storage'
+import { Transactions } from './transactions'
 
 export interface BankAccount {
   id: string
@@ -13,9 +14,11 @@ export interface BankAccount {
 
 export class BankAccounts {
   private readonly storage: Storage
+  private readonly transactions: Transactions
 
-  constructor(storage: Storage) {
+  constructor(storage: Storage, transactions: Transactions) {
     this.storage = storage
+    this.transactions = transactions
     // TODO: remove next line when sure that ID were migrated to Bxxx style
     if (this.list()[0].id.startsWith('A')) {
       console.error('Bank account should have IDs which start with a B.')
@@ -59,5 +62,17 @@ export class BankAccounts {
     const newValue = !account.favorite
     account.favorite = newValue
     return newValue
+  }
+
+  /**
+   * Returns the balance for the given account
+   * @param accountId
+   */
+  getAccountBalance(accountId: string) {
+    return _.chain(this.transactions.listForAccount(accountId))
+      .filter(t => accountId === t.fromId || accountId === t.toId)
+      .map(t => (accountId === t.toId ? t.amount : -t.amount))
+      .reduce((a, b) => a + b, 0)
+      .value()
   }
 }
