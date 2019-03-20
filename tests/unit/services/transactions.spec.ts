@@ -74,11 +74,13 @@ describe('Transactions', () => {
   })
 
   it('add staged transactions, confirm and delete', () => {
+    expect(transactions.hasUnclassifiedStagedTransaction()).toEqual(false)
     const csvTransactions: CsvTransaction[] = [
       { date: '2017-09-08', label: 'Sport', debit: 1000, credit: null },
       { date: '2017-09-28', label: 'Doctor Who', debit: null, credit: 2000 }
     ]
     transactions.synchronizeTransactions('B1', csvTransactions)
+    expect(transactions.hasUnclassifiedStagedTransaction()).toEqual(true)
     expect(transactions.listForAccount('B1')).toHaveLength(5)
     const newTransaction1 = {
       amount: -1000,
@@ -106,6 +108,7 @@ describe('Transactions', () => {
     transactions.list().forEach(t => {
       expect(t.stagedDesc).toBeUndefined()
     })
+    expect(transactions.hasUnclassifiedStagedTransaction()).toEqual(false)
     // And finally, let's delete them to come back to original state
     transactions.deleteTransaction(newTransaction1)
     transactions.deleteTransaction(newTransaction2)

@@ -125,6 +125,18 @@ export class Transactions {
   }
 
   /**
+   * Returns true if some staged transactions have not been categorized yet.
+   */
+  hasUnclassifiedStagedTransaction() {
+    for (const t of this.list()) {
+      if (t.stagedDesc && t.fromId === '') {
+        return true
+      }
+    }
+    return false
+  }
+
+  /**
    * Replaces a card payment entry by transactions retrieved from a CSV file
    * @param {*} accountId the account on which the transaction applies
    * @param {*} transactionToReplace the card payment transaction to replace
