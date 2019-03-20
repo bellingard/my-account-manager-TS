@@ -13,7 +13,7 @@ export default class Storage {
   private readonly config: ConfigProps
   private repoFile!: string
   private payeeFinderConfFile!: string
-  private repository!: Repository
+  private repository!: Repository | undefined
   private payeeFinderConf: any
 
   constructor(config: ConfigProps) {
@@ -22,6 +22,8 @@ export default class Storage {
       this.init()
     } catch (e) {
       // could not open one of the storage files: will need to open from the UI
+      this.repository = undefined
+      this.payeeFinderConf = undefined
     }
   }
 
@@ -36,12 +38,20 @@ export default class Storage {
     // Let's read the storage files
     this.repository = jsonfile.readFileSync(this.repoFile, 'UTF-8')
     this.payeeFinderConf = jsonfile.readFileSync(this.payeeFinderConfFile, 'UTF-8')
+    // TODO: remove next line when sure that ID were migrated to Bxxx & Cxx style
+    if (
+      _.values(this.repository!.bankAccounts)[0].id.startsWith('A') ||
+      _.values(this.repository!.categories)[0].id.startsWith('A')
+    ) {
+      console.error('Bank account should have IDs which start with a B, and categories with a C.')
+      throw Error('Invalid bank account or category pattern for IDs. Should start with a B or C.')
+    }
   }
 
   /**
    * Returns the repository of entities
    */
-  repo(): Repository {
+  repo(): Repository | undefined {
     return this.repository
   }
 

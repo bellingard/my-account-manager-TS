@@ -19,11 +19,6 @@ export class BankAccounts {
   constructor(storage: Storage, transactions: Transactions) {
     this.storage = storage
     this.transactions = transactions
-    // TODO: remove next line when sure that ID were migrated to Bxxx style
-    if (this.list()[0].id.startsWith('A')) {
-      console.error('Bank account should have IDs which start with a B.')
-      throw Error('Invalid bank account pattern for IDs. Should start with a B.')
-    }
   }
 
   /**
