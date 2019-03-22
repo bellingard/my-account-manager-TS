@@ -49,6 +49,15 @@ export class BankAccounts {
   }
 
   /**
+   * Returns the name of the bank account based on its ID
+   * @param id
+   */
+  name(id: string): string {
+    const account = this.get(id)
+    return account == null ? '-- bank account? --' : account.name
+  }
+
+  /**
    * Set or unset as favorite
    * @param id
    */

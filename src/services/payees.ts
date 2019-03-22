@@ -37,6 +37,15 @@ export class Payees {
   }
 
   /**
+   * Returns the name of the payee based on its ID
+   * @param id
+   */
+  name(id: string): string {
+    const payee = this.get(id)
+    return payee == null ? '-- payee? --' : payee.name
+  }
+
+  /**
    * Adds a new payee with the given name
    * @param payeeName
    */

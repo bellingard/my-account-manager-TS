@@ -41,6 +41,16 @@ describe('Categories', () => {
     expect(categories.get('unknown_ID')).toBeUndefined()
   })
 
+  it('should give name from ID', () => {
+    expect(categories.name('A1')).toEqual('Expenses')
+    expect(categories.name('unknown')).toEqual('-- category? --')
+  })
+
+  it('should give full name from ID', () => {
+    expect(categories.fullName('A1')).toEqual('Expenses')
+    expect(categories.fullName('A28')).toEqual('Expenses > Food > Resto')
+  })
+
   it('should add new category', () => {
     let newCat = categories.addCategory('Travel', 'A1')
     expect(newCat).toEqual({ id: 'A61', name: 'Travel', parentId: 'A1' })

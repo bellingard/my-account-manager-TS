@@ -78,6 +78,11 @@ describe('BankAccounts', () => {
     expect(bankAccounts.get('unknown_ID')).toBeUndefined()
   })
 
+  it('should give name from ID', () => {
+    expect(bankAccounts.name('B1')).toEqual('Account B1')
+    expect(bankAccounts.name('unknown')).toEqual('-- bank account? --')
+  })
+
   it('should switch', () => {
     const account = bankAccounts.get('B1')
     expect(account.favorite).toEqual(false)

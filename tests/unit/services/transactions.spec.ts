@@ -40,11 +40,46 @@ const storage = new Storage({ storageFolder: '' })
 const transactions = new Transactions(storage, new Payees(storage))
 
 describe('Transactions', () => {
-  it('should check if transfer or not', () => {
+  it('should tell if transfer or not', () => {
     const transfer = { amount: -0, date: '2012-02-02', fromId: 'B1', id: 'T1', payeeId: 'P0', toId: 'B2', desc: '' }
     expect(transactions.isTransfer(transfer)).toEqual(true)
     const standard = { amount: -1, date: '2012-02-02', desc: '', fromId: 'A2', id: 'T1', payeeId: 'P4', toId: 'B3' }
     expect(transactions.isTransfer(standard)).toEqual(false)
+  })
+
+  it('should tell if transaction is a card payments or not', () => {
+    const trueCardPayment = {
+      amount: -1,
+      date: '',
+      desc: '',
+      fromId: '',
+      id: '',
+      payeeId: '',
+      toId: '',
+      stagedDesc: 'Depenses Carte du mois de Juillet'
+    }
+    expect(transactions.isCardPayments(trueCardPayment)).toEqual(true)
+    const wrongCardPayment = {
+      amount: -1,
+      date: '',
+      desc: 'Depenses Carte du mois de Juillet',
+      fromId: '',
+      id: '',
+      payeeId: '',
+      toId: ''
+    }
+    expect(transactions.isCardPayments(wrongCardPayment)).toEqual(false)
+    const anotherWrongCardPayment = {
+      amount: -1,
+      date: '',
+      desc: '',
+      fromId: '',
+      id: '',
+      payeeId: '',
+      toId: '',
+      stagedDesc: 'Depenses Noel'
+    }
+    expect(transactions.isCardPayments(anotherWrongCardPayment)).toEqual(false)
   })
 
   it('should get transaction by ID', () => {
@@ -120,7 +155,7 @@ describe('Transactions', () => {
       { date: '2018-11-03', label: 'Sport', debit: 1000, credit: null },
       { date: '2018-12-20', label: 'Doctor Who', debit: null, credit: 2000 }
     ]
-    let cardPaymenttransaction = transactions.get('T1001')
+    const cardPaymenttransaction = transactions.get('T1001')
     transactions.replaceCardPayments('B1', cardPaymenttransaction, csvTransactions, err => {
       expect(err).not.toBeNull()
       expect(err!.message).toEqual(
@@ -135,7 +170,7 @@ describe('Transactions', () => {
       { date: '2018-11-03', label: 'Sport', debit: 1000, credit: null },
       { date: '2018-12-20', label: 'Doctor Who', debit: null, credit: 2000 }
     ]
-    let cardPaymenttransaction = transactions.get('T1003')
+    const cardPaymenttransaction = transactions.get('T1003')
     expect(transactions.listForAccount('B1')).toHaveLength(3)
     transactions.replaceCardPayments('B1', cardPaymenttransaction, csvTransactions, err => {
       expect(err).toBeNull()

@@ -39,6 +39,29 @@ export class Categories {
   }
 
   /**
+   * Returns the name of the category based on its ID
+   * @param id
+   */
+  name(id: string): string {
+    const category = this.get(id)
+    return category == null ? '-- category? --' : category.name
+  }
+
+  /**
+   * Returns the name of the category, with name of all parent categories
+   * @param id
+   */
+  fullName(id: string): string {
+    const categoryName = this.name(id)
+    const parentId = this.get(id) && this.get(id).parentId
+    if (parentId) {
+      return `${this.fullName(parentId)} > ${categoryName}`
+    } else {
+      return categoryName
+    }
+  }
+
+  /**
    * Adds a new category with the given name and a parent category
    * @param categoryName
    * @param parentCategoryId

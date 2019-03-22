@@ -43,6 +43,11 @@ describe('Payees', () => {
     expect(payees.get('unknown_ID')).toBeUndefined()
   })
 
+  it('should give name from ID', () => {
+    expect(payees.name('P303')).toEqual('Payee 303')
+    expect(payees.name('unknown')).toEqual('-- payee? --')
+  })
+
   it('should add new payee', () => {
     const newPayee = payees.addPayee('New Payee')
     expect(newPayee).toEqual({ id: 'P546', name: 'New Payee' })

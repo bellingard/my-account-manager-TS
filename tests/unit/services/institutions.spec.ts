@@ -31,4 +31,8 @@ describe('Institutions', () => {
     expect(institutions.get('I303')).toEqual({ id: 'I303', name: 'Institution 303' })
     expect(institutions.get('unknown_ID')).toBeUndefined()
   })
+
+  it('should return path for institution icons', () => {
+    expect(institutions.icon('foo')).toEqual('static/institutions/foo.png')
+  })
 })

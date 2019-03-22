@@ -27,4 +27,12 @@ export class Institutions {
   get(id: string): Institution {
     return this.storage.repo().institutions[id]
   }
+
+  /**
+   * Returns the path to the logo of the institution which ID is passed
+   * @param id
+   */
+  icon(id: string) {
+    return `static/institutions/${id}.png`
+  }
 }

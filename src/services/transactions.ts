@@ -35,6 +35,14 @@ export class Transactions {
   }
 
   /**
+   * Tells whether the transaction is a list of monthly card payments
+   * @param transaction
+   */
+  isCardPayments(transaction: Transaction): boolean {
+    return transaction.stagedDesc != null && transaction.stagedDesc.indexOf('Depenses Carte') >= 0
+  }
+
+  /**
    * Returns the transaction for the given ID if it exists.
    * @param id
    */
