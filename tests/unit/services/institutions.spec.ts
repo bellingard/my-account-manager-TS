@@ -33,6 +33,6 @@ describe('Institutions', () => {
   })
 
   it('should return path for institution icons', () => {
-    expect(institutions.icon('foo')).toEqual('static/institutions/foo.png')
+    expect(institutions.icon('foo')).toEqual('/institutions/foo.png')
   })
 })

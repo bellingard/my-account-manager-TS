@@ -33,6 +33,6 @@ export class Institutions {
    * @param id
    */
   icon(id: string) {
-    return `static/institutions/${id}.png`
+    return `/institutions/${id}.png`
   }
 }
