@@ -72,7 +72,7 @@ export class BankAccounts {
    * Returns the balance for the given account
    * @param accountId
    */
-  getAccountBalance(accountId: string) {
+  getBalance(accountId: string) {
     return _.chain(this.transactions.listForAccount(accountId))
       .filter(t => accountId === t.fromId || accountId === t.toId)
       .map(t => (accountId === t.toId ? t.amount : -t.amount))

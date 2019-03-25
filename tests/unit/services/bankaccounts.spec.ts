@@ -91,7 +91,7 @@ describe('BankAccounts', () => {
   })
 
   it('should compute balance', () => {
-    expect(bankAccounts.getAccountBalance('B1')).toEqual(-3651)
-    expect(bankAccounts.getAccountBalance('B164')).toEqual(-2452)
+    expect(bankAccounts.getBalance('B1')).toEqual(-3651)
+    expect(bankAccounts.getBalance('B164')).toEqual(-2452)
   })
 })
