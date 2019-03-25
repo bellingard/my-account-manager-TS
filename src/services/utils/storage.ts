@@ -28,7 +28,7 @@ export default class Storage {
   /**
    * Read all the storage files to load data
    */
-  private init() {
+  public init() {
     // Base storage folder
     const storageFolder = this.config.storageFolder
     this.repoFile = path.join(storageFolder, 'Comptes.json')
