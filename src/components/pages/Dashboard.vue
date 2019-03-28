@@ -90,11 +90,13 @@ export default {
       try {
         this.$storage.init()
         // init all the services
-        const payees = (Vue.prototype.$payees = new Payees(storage))
-        const transactions = (Vue.prototype.$transactions = new Transactions(storage, payees))
-        Vue.prototype.$accounts = new BankAccounts(storage, transactions)
-        Vue.prototype.$institutions = new Institutions(storage)
-        Vue.prototype.$categories = new Categories(storage)
+        Vue.prototype.$payees = new Payees(this.$storage)
+        const payees = Vue.prototype.$payees
+        Vue.prototype.$transactions = new Transactions(this.$storage, payees)
+        const transactions = Vue.prototype.$transactions
+        Vue.prototype.$accounts = new BankAccounts(this.$storage, transactions)
+        Vue.prototype.$institutions = new Institutions(this.$storage)
+        Vue.prototype.$categories = new Categories(this.$storage)
         // and continue
         this.$appConfig.save()
         this.selectFolder = false

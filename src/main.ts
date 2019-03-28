@@ -19,9 +19,11 @@ Vue.config.productionTip = false
 
 Vue.prototype.$format = new Formatter()
 Vue.prototype.$cvsLoader = new CsvLoader()
-const appConfig = (Vue.prototype.$appConfig = new Config(os.homedir()))
+Vue.prototype.$appConfig = new Config(os.homedir())
+const appConfig = Vue.prototype.$appConfig
 appConfig.load()
-const storage = (Vue.prototype.$storage = new Storage(appConfig.props))
+Vue.prototype.$storage = new Storage(appConfig.props)
+const storage = Vue.prototype.$storage
 // storage might not be initialized here if it's the first time the app is launched
 if (storage.repo()) {
   const payees = (Vue.prototype.$payees = new Payees(storage))
