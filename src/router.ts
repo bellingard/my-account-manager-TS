@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import MainPage from './components/MainPage.vue'
 import Dashboard from './components/pages/Dashboard.vue'
 import Settings from './components/pages/Settings.vue'
+import PayeeFinders from './components/pages/PayeeFinders.vue'
 
 Vue.use(Router)
 
@@ -17,6 +18,10 @@ export default new Router({
         {
           path: '/',
           component: Dashboard
+        },
+        {
+          path: 'payeefinders',
+          component: PayeeFinders
         },
         {
           path: 'settings',
