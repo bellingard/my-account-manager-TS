@@ -61,6 +61,7 @@ import Vue from 'vue'
 
 export default Vue.extend({
   name: 'nav-bar',
+
   data() {
     return {
       appVersion: require('../../package.json').version,
@@ -73,6 +74,7 @@ export default Vue.extend({
       ]
     }
   },
+
   computed: {
     miniIconStyle(): string {
       return this.mini ? 'text-xs-center' : ''

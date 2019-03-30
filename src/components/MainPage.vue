@@ -26,6 +26,7 @@ import NavBar from './NavBar.vue'
 
 export default Vue.extend({
   name: 'MainPage',
+
   components: { NavBar }
 })
 </script>

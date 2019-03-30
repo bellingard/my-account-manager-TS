@@ -63,6 +63,7 @@ import { Categories } from '../../services/categories'
 
 export default Vue.extend({
   name: 'dashboard',
+
   data() {
     return {
       favoritesOnly: true,
@@ -70,6 +71,7 @@ export default Vue.extend({
       selectFolder: !this.$storage.repo()
     }
   },
+
   computed: {
     accounts(): BankAccount[] {
       // Warn: need to rely on 'this.selectFolder' to be sure that
@@ -83,11 +85,13 @@ export default Vue.extend({
       }
     }
   },
+
   methods: {
     getFileName(e: any) {
-      var files = e.target.files
+      const files = e.target.files
       this.accountFile = files[0].path
     },
+
     loadData() {
       this.$appConfig.props.storageFolder = path.dirname(this.accountFile)
       try {
