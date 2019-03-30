@@ -5,11 +5,11 @@
 </template>
 
 <script>
-  export default {
-    name: 'my-account-manager'
-  }
+export default {
+  name: 'my-account-manager'
+}
 </script>
 
 <style>
-  /* CSS */
+/* CSS */
 </style>

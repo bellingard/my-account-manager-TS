@@ -20,13 +20,14 @@
   </v-app>
 </template>
 
-<script>
-import NavBar from './NavBar'
+<script lang="ts">
+import Vue from 'vue'
+import NavBar from './NavBar.vue'
 
-export default {
-  name: 'landing-page',
+export default Vue.extend({
+  name: 'MainPage',
   components: { NavBar }
-}
+})
 </script>
 
 <style>

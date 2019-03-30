@@ -26,8 +26,10 @@ Vue.prototype.$storage = new Storage(appConfig.props)
 const storage = Vue.prototype.$storage
 // storage might not be initialized here if it's the first time the app is launched
 if (storage.repo()) {
-  const payees = (Vue.prototype.$payees = new Payees(storage))
-  const transactions = (Vue.prototype.$transactions = new Transactions(storage, payees))
+  Vue.prototype.$payees = new Payees(storage)
+  const payees = Vue.prototype.$payees
+  Vue.prototype.$transactions = new Transactions(storage, payees)
+  const transactions = Vue.prototype.$transactions
   Vue.prototype.$accounts = new BankAccounts(storage, transactions)
   Vue.prototype.$institutions = new Institutions(storage)
   Vue.prototype.$categories = new Categories(storage)

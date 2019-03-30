@@ -56,8 +56,10 @@
   </v-navigation-drawer>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
   name: 'nav-bar',
   data() {
     return {
@@ -72,11 +74,11 @@ export default {
     }
   },
   computed: {
-    miniIconStyle() {
+    miniIconStyle(): string {
       return this.mini ? 'text-xs-center' : ''
     }
   }
-}
+})
 </script>
 
 <style>

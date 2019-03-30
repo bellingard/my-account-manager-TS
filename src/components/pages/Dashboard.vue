@@ -51,16 +51,17 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from 'vue'
 import path from 'path'
 import * as _ from 'lodash'
-import { BankAccounts } from '../../services/bankaccounts'
+import { BankAccounts, BankAccount } from '../../services/bankaccounts'
 import { Transactions } from '../../services/transactions'
 import { Payees } from '../../services/payees'
 import { Institutions } from '../../services/institutions'
 import { Categories } from '../../services/categories'
 
-export default {
+export default Vue.extend({
   name: 'dashboard',
   data() {
     return {
@@ -70,18 +71,20 @@ export default {
     }
   },
   computed: {
-    accounts() {
+    accounts(): BankAccount[] {
       // Warn: need to rely on 'this.selectFolder' to be sure that
       // the component will get refreshed once the folder is selected
-      return this.selectFolder
-        ? []
-        : _.chain(this.$accounts.list(this.showClosed))
-            .filter(a => (this.favoritesOnly ? a.favorite : true))
-            .value()
+      if (this.selectFolder) {
+        return []
+      } else {
+        return _.chain(this.$accounts.list())
+          .filter(a => (this.favoritesOnly ? a.favorite : true))
+          .value()
+      }
     }
   },
   methods: {
-    getFileName(e) {
+    getFileName(e: any) {
       var files = e.target.files
       this.accountFile = files[0].path
     },
@@ -106,7 +109,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 
 <style>
