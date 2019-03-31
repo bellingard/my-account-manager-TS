@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import MainPage from './components/MainPage.vue'
 import Dashboard from './components/pages/Dashboard.vue'
+import Categories from './components/pages/Categories.vue'
 import Settings from './components/pages/Settings.vue'
 import PayeeFinders from './components/pages/PayeeFinders.vue'
 import Payees from './components/pages/Payees.vue'
@@ -20,6 +21,10 @@ export default new Router({
         {
           path: '/',
           component: Dashboard
+        },
+        {
+          path: 'categories',
+          component: Categories
         },
         {
           path: 'institutions',
