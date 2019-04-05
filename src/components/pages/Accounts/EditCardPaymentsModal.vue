@@ -17,14 +17,14 @@
         </div>
       </v-card-title>
       <v-card-text>
-        <v-text-field
+        <v-textarea
+          outline
           name="transactionsInput"
           v-model="transactionsInput"
           label="Transactions"
-          textarea
           rows="15"
           autofocus
-        ></v-text-field>
+        ></v-textarea>
         <div v-if="errorMessage" class="red--text">
           <v-icon class="red--text">block</v-icon>
           {{ this.errorMessage }}

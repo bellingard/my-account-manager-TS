@@ -19,16 +19,15 @@
       <v-card-text>
         <v-layout row wrap>
           <v-flex xs11>
-            <v-select
+            <v-autocomplete
               label="Payee"
               :items="$payees.list()"
               item-text="name"
               item-value="id"
               v-model="payeeId"
-              autocomplete
               autofocus
               v-if="!showNewPayeeField"
-            ></v-select>
+            ></v-autocomplete>
             <v-text-field label="New Payee" v-model="newPayeeName" v-if="showNewPayeeField"></v-text-field>
           </v-flex>
           <v-flex xs1>
@@ -37,7 +36,7 @@
             </v-btn>
           </v-flex>
           <v-flex xs12>
-            <v-select
+            <v-autocomplete
               label="Category"
               :items="$categories.list()"
               item-text="name"
@@ -45,12 +44,11 @@
               v-model="categoryId"
               :hint="$categories.fullName(this.categoryId)"
               persistent-hint
-              autocomplete
               required
-            ></v-select>
+            ></v-autocomplete>
           </v-flex>
           <v-flex xs12>
-            <v-text-field label="Description" textarea rows="3" v-model="description"></v-text-field>
+            <v-textarea outline label="Description" rows="3" v-model="description"></v-textarea>
           </v-flex>
         </v-layout>
       </v-card-text>

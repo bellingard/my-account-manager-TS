@@ -9,15 +9,14 @@
       </v-card-title>
       <v-card-text>
         <v-text-field label="Expression" v-model="expression" required autofocus></v-text-field>
-        <v-select
+        <v-autocomplete
           label="Payee"
           :items="$payees.list()"
           item-text="name"
           item-value="id"
           v-model="payeeId"
-          autocomplete
-        ></v-select>
-        <v-select
+        ></v-autocomplete>
+        <v-autocomplete
           label="Category"
           :items="$categories.list()"
           item-text="name"
@@ -25,9 +24,8 @@
           v-model="categoryId"
           :hint="$categories.fullName(this.categoryId)"
           persistent-hint
-          autocomplete
           required
-        ></v-select>
+        ></v-autocomplete>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>

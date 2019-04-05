@@ -8,14 +8,14 @@
         <span class="headline">Synchronize account with transactions</span>
       </v-card-title>
       <v-card-text>
-        <v-text-field
+        <v-textarea
+          outline
           name="transactionsInput"
           v-model="transactionsInput"
           label="Transactions"
-          textarea
           rows="15"
           autofocus
-        ></v-text-field>
+        ></v-textarea>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
