@@ -12,23 +12,6 @@
       </v-btn>
     </div>
     <div>
-      <v-snackbar
-        :timeout="2000"
-        top
-        right
-        v-model="cantSaveSnackbar"
-      >Cannot save: some staged transactions don't have a category.</v-snackbar>
-      <v-btn
-        class="grey darken-3"
-        :loading="saveStatus"
-        :disabled="saveStatus"
-        @click.native="save()"
-      >
-        Save
-        <v-icon right>save</v-icon>
-      </v-btn>
-    </div>
-    <div>
       <v-btn class="grey darken-3" @click.native="shrinkCategories()">
         Shrink Categories
         <v-icon right>compare_arrows</v-icon>
@@ -45,9 +28,7 @@ export default Vue.extend({
 
   data() {
     return {
-      reloadStatus: false,
-      saveStatus: false,
-      cantSaveSnackbar: false
+      reloadStatus: false
     }
   },
 
@@ -60,21 +41,6 @@ export default Vue.extend({
         }
         this.reloadStatus = false
       })
-    },
-
-    save() {
-      if (this.$transactions.hasUnclassifiedStagedTransaction()) {
-        this.cantSaveSnackbar = true
-      } else {
-        this.saveStatus = true
-        this.$transactions.confirmTransactions()
-        this.$storage.save(err => {
-          if (err) {
-            console.error(err)
-          }
-          this.saveStatus = false
-        })
-      }
     },
 
     shrinkCategories() {
