@@ -47,7 +47,7 @@
               required
             ></v-autocomplete>
           </v-flex>
-          <v-flex xs12>
+          <v-flex xs12 class="mt-4">
             <v-textarea outline label="Description" rows="3" v-model="description"></v-textarea>
           </v-flex>
         </v-layout>

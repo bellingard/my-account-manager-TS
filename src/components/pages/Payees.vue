@@ -2,7 +2,7 @@
   <main>
     <v-container fluid>
       <v-layout row wrap>
-        <v-flex xs4>
+        <v-flex xs4 class="mb-3">
           <v-text-field
             append-icon="search"
             label="Search"

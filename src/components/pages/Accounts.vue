@@ -12,10 +12,10 @@
             item-value="id"
           ></v-select>
         </v-flex>
-        <v-flex xs2 class="pt-3">
+        <v-flex xs2>
           <v-switch label="Favorites" v-model="favoritesOnly" color="blue darken-1"></v-switch>
         </v-flex>
-        <v-flex xs2 class="pt-3">
+        <v-flex xs2>
           <v-switch label="Show closed" v-model="showClosed" color="blue darken-1"></v-switch>
         </v-flex>
         <v-flex xs1></v-flex>

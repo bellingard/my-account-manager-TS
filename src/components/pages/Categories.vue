@@ -15,7 +15,7 @@
             class
           ></v-text-field>
         </v-flex>
-        <v-flex xs2 class="pt-3">
+        <v-flex xs2>
           <v-switch label="Show hidden" v-model="showHidden" color="blue darken-1"></v-switch>
         </v-flex>
         <v-flex xs6 class="text-xs-right">
