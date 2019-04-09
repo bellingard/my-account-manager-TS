@@ -16,6 +16,7 @@ export class BankAccounts {
 
   constructor(storage: Storage) {
     this.storage = storage
+    alert('boo')
     // TODO: remove next line when sure that ID were migrated to Bxxx style
     if (this.list()[0].id.startsWith('A')) {
       console.error('Bank account should have IDs which start with a B.')
