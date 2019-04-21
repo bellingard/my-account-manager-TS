@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import Storage from './utils/storage'
-import { Transactions } from './transactions'
+import { Transactions, Transaction } from './transactions'
 
 export interface BankAccount {
   id: string
@@ -10,6 +10,13 @@ export interface BankAccount {
   accountNumber: string
   institutionId: string
   parentId: string
+}
+
+export interface MonthlyStats {
+  date: string
+  total: number
+  debits: number
+  credits: number
 }
 
 export class BankAccounts {
@@ -78,5 +85,55 @@ export class BankAccounts {
       .map(t => (accountId === t.toId ? t.amount : -t.amount))
       .reduce((a, b) => a + b, 0)
       .value()
+  }
+
+  /**
+   * Returns the monthly statistics for the given account, for the 12 months 
+   * prior to the given date
+   * @param accountId
+   * @param date
+   */
+  statsForPreviousYear(accountId: string, date: Date): MonthlyStats[] {
+    const oneYearBefore = this.oneYearBeforeDate(date)
+    return _.chain(this.transactions.listForAccount(accountId))
+      .filter(t => t.date >= oneYearBefore)
+      .groupBy(t => t.date.substring(0, 7))
+      .map(this.computeMonthlyStats)
+      .sortBy(s => s.date)
+      .value()
+  }
+
+  oneYearBeforeDate(date: Date): string {
+    return `${date.getFullYear() - 1}-${date.getMonth() > 9 ? '' : '0'}${date.getMonth() + 1}-01`
+  }
+
+  computeMonthlyStats(transactions: Transaction[]): MonthlyStats {
+    const stats = {
+      date: transactions[0].date,
+      total: 0,
+      debits: 0,
+      credits: 0
+    }
+    transactions.forEach(t => {
+      if (
+        // "other expenses"
+        t.fromId === 'A120' ||
+        // "other revenues"
+        t.fromId === 'A159' ||
+        // Bank transferts - cannot use "this.transactions.isTransfer()" here...
+        (BankAccounts.isValidID(t.fromId) && BankAccounts.isValidID(t.toId))
+      ) {
+        // Let's not count them
+        return
+      }
+
+      stats.total += t.amount
+      if (t.amount > 0) {
+        stats.credits += t.amount
+      } else {
+        stats.debits += t.amount
+      }
+    })
+    return stats
   }
 }

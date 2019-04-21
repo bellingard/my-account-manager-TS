@@ -39,7 +39,7 @@
             <synchronize-modal :account="getAccountId()" @saved="refreshAccountData"></synchronize-modal>
             <payee-finder-modal></payee-finder-modal>
           </div>
-          <div class="mt-5">
+          <div class="mt-3">
             <v-text-field
               append-icon="search"
               label="Search"
@@ -48,6 +48,9 @@
               v-model="search"
               class
             ></v-text-field>
+          </div>
+          <div class="mt-5">
+            <evolution-chart :accountId="getAccountId()" :height="300"></evolution-chart>
           </div>
         </v-flex>
 
@@ -124,6 +127,7 @@ import PayeeFinderModal from './Accounts/PayeeFinderModal.vue'
 import SynchronizeModal from './Accounts/SynchronizeModal.vue'
 import EditTransactionModal from './Accounts/EditTransactionModal.vue'
 import EditCardPaymentsModal from './Accounts/EditCardPaymentsModal.vue'
+import EvolutionChart from './Accounts/EvolutionChart.vue'
 import { BankAccount } from '@/services/bankaccounts'
 import { Transaction } from '@/services/transactions'
 
@@ -134,7 +138,8 @@ export default Vue.extend({
     PayeeFinderModal,
     SynchronizeModal,
     EditTransactionModal,
-    EditCardPaymentsModal
+    EditCardPaymentsModal,
+    EvolutionChart
   },
 
   props: ['accountId'],
@@ -168,7 +173,10 @@ export default Vue.extend({
       favoritesOnly: false,
       showClosed: false,
       search: '',
-      isFavorite: (this as any).getAccountId() != null ? (this as any).$accounts.get((this as any).getAccountId()).favorite : false,
+      isFavorite:
+        (this as any).getAccountId() != null
+          ? (this as any).$accounts.get((this as any).getAccountId()).favorite
+          : false,
       transactions: (this as any).retrieveTransactions(),
       accountBalance: (this as any).computeAccountBalance(),
       editTransaction: null as Transaction | null,

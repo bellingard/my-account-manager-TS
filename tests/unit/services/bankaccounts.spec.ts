@@ -94,4 +94,39 @@ describe('BankAccounts', () => {
     expect(bankAccounts.getBalance('B1')).toEqual(-3651)
     expect(bankAccounts.getBalance('B164')).toEqual(-2452)
   })
+
+  it('should compute one year before date', () => {
+    let date = new Date(2019, 3, 21)
+    expect(bankAccounts.oneYearBeforeDate(date)).toEqual('2018-04-01')
+    date = new Date(2019, 11, 1)
+    expect(bankAccounts.oneYearBeforeDate(date)).toEqual('2018-12-01')
+  })
+
+  it('should compute monthly stats for the given transactions', () => {
+    const transactions = [
+      { amount: 1000, fromId: 'B1', toId: 'B2', date: '2019-02-01', desc: '', id: '', payeeId: '' },
+      { amount: 1100, fromId: 'A1', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
+      { amount: -2600, fromId: 'A2', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
+      { amount: 1000, fromId: 'A120', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
+      { amount: 1000, fromId: 'A159', toId: 'B1', date: '', desc: '', id: '', payeeId: '' }
+    ]
+    expect(bankAccounts.computeMonthlyStats(transactions)).toEqual({
+      date: '2019-02-01',
+      total: -1500,
+      debits: -2600,
+      credits: 1100
+    })
+  })
+
+  it('should compute stats for previous year', () => {
+    expect(bankAccounts.statsForPreviousYear('B164', new Date(2013, 1, 1))).toEqual([
+      {
+        credits: 1166,
+        date: '2012-02-03',
+        debits: -2618,
+        total: -1452
+      }
+    ])
+    expect(bankAccounts.statsForPreviousYear('B164', new Date(2013, 2, 1))).toEqual([])
+  })
 })
