@@ -148,4 +148,7 @@ export default Vue.extend({
 </script>
 
 <style>
+.state-icon {
+  font-size: 15px;
+}
 </style>

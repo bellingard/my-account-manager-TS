@@ -20,25 +20,8 @@
         </v-flex>
         <v-flex xs1></v-flex>
 
-        <v-flex xs3 v-if="selectedAccount != null" class="pr-5">
-          <div>
-            <div class="pb-4">
-              <v-avatar size="64px">
-                <img :src="$institutions.icon($accounts.get(selectedAccount).institutionId)">
-              </v-avatar>
-            </div>
-            <div class="grey--text text--darken-1">Balance</div>
-            <div class="text-xs-right headline">{{ $format.amount(accountBalance) }} &euro;</div>
-            <div class="grey--text text--darken-1">Account number</div>
-            <div class="text-xs-right">{{ $accounts.get(selectedAccount).accountNumber }}</div>
-          </div>
-          <div>
-            <v-btn icon class="blue--text darken-1" @click="switchFavorite">
-              <v-icon>{{ this.isFavorite ? 'star' : 'star_border' }}</v-icon>
-            </v-btn>
-            <synchronize-modal :account="getAccountId()" @saved="refreshAccountData"></synchronize-modal>
-            <payee-finder-modal></payee-finder-modal>
-          </div>
+        <v-flex xs3 v-if="selectedAccount != null" class="pr-2">
+          <card-main-info :accountId="selectedAccount" @synced="refreshAccount"></card-main-info>
           <div class="mt-3">
             <v-text-field
               append-icon="search"
@@ -123,8 +106,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import * as _ from 'lodash'
-import PayeeFinderModal from './Accounts/PayeeFinderModal.vue'
-import SynchronizeModal from './Accounts/SynchronizeModal.vue'
+import CardMainInfo from './Accounts/CardMainInfo.vue'
 import EditTransactionModal from './Accounts/EditTransactionModal.vue'
 import EditCardPaymentsModal from './Accounts/EditCardPaymentsModal.vue'
 import EvolutionChart from './Accounts/EvolutionChart.vue'
@@ -135,8 +117,7 @@ export default Vue.extend({
   name: 'accounts',
 
   components: {
-    PayeeFinderModal,
-    SynchronizeModal,
+    CardMainInfo,
     EditTransactionModal,
     EditCardPaymentsModal,
     EvolutionChart
@@ -173,12 +154,7 @@ export default Vue.extend({
       favoritesOnly: true,
       showClosed: false,
       search: '',
-      isFavorite:
-        (this as any).getAccountId() != null
-          ? (this as any).$accounts.get((this as any).getAccountId()).favorite
-          : false,
       transactions: (this as any).retrieveTransactions(),
-      accountBalance: (this as any).computeAccountBalance(),
       editTransaction: null as Transaction | null,
       editTransactionModal: false,
       editCardModal: false,
@@ -200,9 +176,7 @@ export default Vue.extend({
 
   watch: {
     selectedAccount: function(newAccount) {
-      this.isFavorite = this.$accounts.get(this.getAccountId()).favorite
       this.transactions = this.retrieveTransactions()
-      this.accountBalance = this.computeAccountBalance()
     }
   },
 
@@ -210,18 +184,15 @@ export default Vue.extend({
     getAccountId(): string {
       return this.selectedAccount == null ? this.accountId : this.selectedAccount
     },
+    refreshAccount() {
+      console.info("REFRESHED!")
+      this.transactions = this.retrieveTransactions()
+    },
     retrieveTransactions(): Transaction[] {
       return this.getAccountId() != null ? this.$transactions.listForAccount(this.getAccountId()) : []
     },
     computeAccountBalance(): number {
       return this.getAccountId() != null ? this.$accounts.getBalance(this.getAccountId()) : 0
-    },
-    refreshAccountData() {
-      this.transactions = this.retrieveTransactions()
-      this.accountBalance = this.computeAccountBalance()
-    },
-    switchFavorite() {
-      this.isFavorite = this.$accounts.switchFavorite(this.getAccountId())
     },
     // methods to manage the edition of transactions
     openEditModal(transaction: Transaction) {

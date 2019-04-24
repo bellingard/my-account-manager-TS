@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="pfModal" persistent width="50%">
-    <v-btn icon class="blue--text darken-1" slot="activator">
+    <v-btn icon slot="activator">
       <v-icon>add_circle_outline</v-icon>
     </v-btn>
     <v-card>
