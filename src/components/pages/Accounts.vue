@@ -22,6 +22,12 @@
 
         <v-flex xs3 v-if="selectedAccount != null" class="pr-2">
           <card-main-info :accountId="selectedAccount" @synced="refreshAccount"></card-main-info>
+          <div class="mt-2">
+            <v-card class="pa-2">
+              <v-card-title>Yearly Evolution</v-card-title>
+              <evolution-chart :accountId="getAccountId()" :height="300"></evolution-chart>
+            </v-card>
+          </div>
           <div class="mt-3">
             <v-text-field
               append-icon="search"
@@ -31,9 +37,6 @@
               v-model="search"
               class
             ></v-text-field>
-          </div>
-          <div class="mt-5">
-            <evolution-chart :accountId="getAccountId()" :height="300"></evolution-chart>
           </div>
         </v-flex>
 
