@@ -170,7 +170,7 @@ export default Vue.extend({
           descending: true
         }
       },
-      favoritesOnly: false,
+      favoritesOnly: true,
       showClosed: false,
       search: '',
       isFavorite:
