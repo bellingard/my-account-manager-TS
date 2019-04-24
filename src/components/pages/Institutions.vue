@@ -20,7 +20,7 @@
             :rows-per-page-items="pagination.size"
             :pagination.sync="pagination.sort"
             :search="search"
-            class="elevation-1"
+            class="elevation-3"
           >
             <template slot="items" slot-scope="props">
               <td class="text-xs-left">{{ props.item.name }}</td>

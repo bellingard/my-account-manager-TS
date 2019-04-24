@@ -19,7 +19,7 @@
             :items="finders"
             :rows-per-page-items="pagination.size"
             :search="search"
-            class="elevation-1"
+            class="elevation-3"
           >
             <template slot="items" slot-scope="props">
               <td class="text-xs-left">{{ props.item.expr }}</td>
