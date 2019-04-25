@@ -35,6 +35,7 @@
               single-line
               hide-details
               v-model="search"
+              @focus="prefillSearch"
             ></v-text-field>
           </div>
         </v-flex>
@@ -187,6 +188,9 @@ export default Vue.extend({
   methods: {
     getAccountId(): string {
       return this.selectedAccount == null ? this.accountId : this.selectedAccount
+    },
+    prefillSearch() {
+      this.search = window.getSelection().toString()
     },
     refreshAccount() {
       this.transactions = this.retrieveTransactions()
