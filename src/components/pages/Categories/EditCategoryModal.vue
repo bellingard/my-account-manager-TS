@@ -48,7 +48,7 @@ export default Vue.extend({
     updateCategory() {
       this.$categories.get(this.category.id).name = this.name
       this.$categories.get(this.category.id).hidden = !this.visible
-      this.$emit('saved', this.category)
+      this.$emit('saved')
     }
   },
 

@@ -189,7 +189,6 @@ export default Vue.extend({
       return this.selectedAccount == null ? this.accountId : this.selectedAccount
     },
     refreshAccount() {
-      console.info("REFRESHED!")
       this.transactions = this.retrieveTransactions()
     },
     retrieveTransactions(): Transaction[] {

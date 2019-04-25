@@ -51,7 +51,9 @@ export default Vue.extend({
       return this.$institutions.icon(this.$accounts.get(this.accountId).institutionId)
     },
     balance(): string {
-      this.forceRecompute
+      if (this.forceRecompute > 0) {
+        // this is just used to force refresh
+      }
       return this.$format.amount(this.$accounts.getBalance(this.accountId))
     },
     accountNumber(): string {

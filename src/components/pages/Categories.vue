@@ -2,9 +2,6 @@
   <main>
     <v-container fluid>
       <v-layout row wrap>
-        <v-snackbar :timeout="2000" top right v-model="categoryAddedSnackbar">Category Added</v-snackbar>
-        <v-snackbar :timeout="2000" top right v-model="categoryUpdatedSnackbar">Category Updated</v-snackbar>
-
         <v-flex xs4 class="pr-4">
           <v-text-field
             append-icon="search"
@@ -89,11 +86,8 @@ export default Vue.extend({
           descending: false
         }
       },
+      allCategories: this.$categories.list(true) as Category[],
       search: '',
-      addedCategory: null as Category | null,
-      updatedCategory: null as Category | null,
-      categoryAddedSnackbar: false,
-      categoryUpdatedSnackbar: false,
       editCategory: null as Category | null,
       editCategoryModal: false,
       showHidden: false
@@ -102,31 +96,24 @@ export default Vue.extend({
 
   computed: {
     categories(): any[] {
-      // we rely on 'addedCategory' to be sure that the page gets refreshed
-      if (this.addedCategory) {
-        this.categoryAddedSnackbar = true
-        this.addedCategory = null
+      if (this.$storage.repo()) {
+        return _.chain(this.allCategories)
+          .filter(c => (this.showHidden ? true : !c.hidden))
+          .map(c =>
+            Object.assign({}, c, {
+              fullName: this.$categories.fullName(c.id),
+              transactionCount: this.$transactions.listForCategory(c.id).length
+            })
+          )
+          .value()
       }
-      if (this.updatedCategory) {
-        this.categoryUpdatedSnackbar = true
-        this.updatedCategory = null
-      }
-      return this.$storage.repo()
-        ? _.chain(this.$categories.list(this.showHidden))
-            .map(c =>
-              Object.assign({}, c, {
-                fullName: this.$categories.fullName(c.id),
-                transactionCount: this.$transactions.listForCategory(c.id).length
-              })
-            )
-            .value()
-        : []
+      return []
     }
   },
 
   methods: {
     categoryAdded(newCategory: Category | null) {
-      this.addedCategory = newCategory
+      this.allCategories = this.$categories.list(true)
       // let's use the search to focus on the new category
       this.search = newCategory ? newCategory.name : ''
     },
@@ -139,9 +126,9 @@ export default Vue.extend({
       this.editCategory = null
       this.editCategoryModal = false
     },
-    categorySaved(updatedCategory: Category | null) {
-      this.updatedCategory = updatedCategory
+    categorySaved() {
       this.closeCategoryModal()
+      this.allCategories = this.$categories.list(true)
     }
   }
 })
