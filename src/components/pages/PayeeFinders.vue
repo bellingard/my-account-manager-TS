@@ -9,7 +9,6 @@
             single-line
             hide-details
             v-model="search"
-            class
           ></v-text-field>
         </v-flex>
 
@@ -50,8 +49,8 @@ export default Vue.extend({
   data() {
     return {
       headers: [
-        { text: 'Expression', value: 'expression', sortable: false, align: 'left' },
-        { text: 'Category', value: 'category', sortable: false },
+        { text: 'Expression', value: 'expr', sortable: false, align: 'left' },
+        { text: 'Category', value: 'cat', sortable: false },
         { text: 'Payee', value: 'payee', sortable: false }
       ],
       pagination: {

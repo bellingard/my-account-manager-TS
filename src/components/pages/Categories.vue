@@ -9,7 +9,6 @@
             single-line
             hide-details
             v-model="search"
-            class
           ></v-text-field>
         </v-flex>
         <v-flex xs2>

@@ -35,7 +35,6 @@
               single-line
               hide-details
               v-model="search"
-              class
             ></v-text-field>
           </div>
         </v-flex>
