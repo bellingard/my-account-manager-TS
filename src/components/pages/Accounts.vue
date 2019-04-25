@@ -71,7 +71,7 @@
                 <div>{{ $format.year(props.item.date) }}</div>
               </td>
               <td class="text-xs-left">
-                <div v-if="props.item.payeeId">{{ $payees.name(props.item.payeeId) }}</div>
+                <div v-if="props.item.payeeId">{{ props.item.payeeName }}</div>
                 <div v-if="props.item.desc !== ''">{{ props.item.desc }}</div>
                 <div
                   v-if="props.item.stagedDesc !== ''"
@@ -79,7 +79,7 @@
                 >{{ props.item.stagedDesc }}</div>
               </td>
               <td class="text-xs-center">
-                <div>{{ $categories.name(props.item.fromId) }}</div>
+                <div>{{ props.item.categoryName }}</div>
               </td>
               <td
                 class="text-xs-right"
@@ -136,13 +136,14 @@ export default Vue.extend({
         { text: 'Date', value: 'date', sortable: false, align: 'left' },
         {
           text: 'Description',
-          value: 'description',
+          // value must be "payeeName" here if we want the search to work...
+          value: 'payeeName',
           sortable: false,
           align: 'left'
         },
         {
           text: 'Category',
-          value: 'category',
+          value: 'categoryName',
           sortable: false,
           align: 'center'
         },
@@ -192,7 +193,18 @@ export default Vue.extend({
       this.transactions = this.retrieveTransactions()
     },
     retrieveTransactions(): Transaction[] {
-      return this.getAccountId() != null ? this.$transactions.listForAccount(this.getAccountId()) : []
+      // return this.getAccountId() != null ? this.$transactions.listForAccount(this.getAccountId()) : []
+      if (this.getAccountId() != null) {
+        return _.chain(this.$transactions.listForAccount(this.getAccountId()))
+          .map(t =>
+            Object.assign({}, t, {
+              payeeName: t.payeeId ? this.$payees.name(t.payeeId) : '',
+              categoryName: this.$categories.name(t.fromId)
+            })
+          )
+          .value()
+      }
+      return []
     },
     computeAccountBalance(): number {
       return this.getAccountId() != null ? this.$accounts.getBalance(this.getAccountId()) : 0
