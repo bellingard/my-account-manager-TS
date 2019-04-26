@@ -28,15 +28,22 @@
               <evolution-chart :accountId="getAccountId()" :height="300"></evolution-chart>
             </v-card>
           </div>
-          <div class="mt-3">
-            <v-text-field
-              append-icon="search"
-              label="Search"
-              single-line
-              hide-details
-              v-model="search"
-              @focus="prefillSearch"
-            ></v-text-field>
+          <div class="mt-2">
+            <v-card class="pa-2">
+              <v-text-field
+                append-icon="search"
+                label="Search"
+                single-line
+                hide-details
+                v-model="search"
+                @focus="prefillSearch"
+              ></v-text-field>
+              <v-switch
+                label="Hide classified transactions"
+                v-model="nonClassifiedOnly"
+                color="blue darken-1"
+              ></v-switch>
+            </v-card>
           </div>
         </v-flex>
 
@@ -159,7 +166,8 @@ export default Vue.extend({
       favoritesOnly: true,
       showClosed: false,
       search: '',
-      transactions: (this as any).retrieveTransactions(),
+      nonClassifiedOnly: false,
+      allTransactions: (this as any).retrieveAllTransactions(),
       editTransaction: null as Transaction | null,
       editTransactionModal: false,
       editCardModal: false,
@@ -176,12 +184,26 @@ export default Vue.extend({
       } else {
         return []
       }
+    },
+    transactions(): Transaction[] {
+      if (this.getAccountId() != null) {
+        return _.chain(this.allTransactions)
+          .filter(t => (this.nonClassifiedOnly ? this.$transactions.isUnclassifiedStaged(t) : true))
+          .map(t =>
+            Object.assign({}, t, {
+              payeeName: t.payeeId ? this.$payees.name(t.payeeId) : '',
+              categoryName: this.$categories.name(t.fromId)
+            })
+          )
+          .value()
+      }
+      return []
     }
   },
 
   watch: {
     selectedAccount: function(newAccount) {
-      this.transactions = this.retrieveTransactions()
+      this.allTransactions = this.retrieveAllTransactions()
     }
   },
 
@@ -193,21 +215,10 @@ export default Vue.extend({
       this.search = window.getSelection().toString()
     },
     refreshAccount() {
-      this.transactions = this.retrieveTransactions()
+      this.allTransactions = this.retrieveAllTransactions()
     },
-    retrieveTransactions(): Transaction[] {
-      // return this.getAccountId() != null ? this.$transactions.listForAccount(this.getAccountId()) : []
-      if (this.getAccountId() != null) {
-        return _.chain(this.$transactions.listForAccount(this.getAccountId()))
-          .map(t =>
-            Object.assign({}, t, {
-              payeeName: t.payeeId ? this.$payees.name(t.payeeId) : '',
-              categoryName: this.$categories.name(t.fromId)
-            })
-          )
-          .value()
-      }
-      return []
+    retrieveAllTransactions(): Transaction[] {
+      return this.getAccountId() != null ? this.$transactions.listForAccount(this.getAccountId()) : []
     },
     computeAccountBalance(): number {
       return this.getAccountId() != null ? this.$accounts.getBalance(this.getAccountId()) : 0
@@ -239,7 +250,7 @@ export default Vue.extend({
       this.editCardModal = false
     },
     transactionSaved() {
-      this.transactions = this.retrieveTransactions()
+      this.allTransactions = this.retrieveAllTransactions()
       this.closeTransactionModal()
       this.closeCardModal()
     }

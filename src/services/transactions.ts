@@ -137,11 +137,19 @@ export class Transactions {
    */
   hasUnclassifiedStagedTransaction() {
     for (const t of this.list()) {
-      if (t.stagedDesc && t.fromId === '') {
+      if (this.isUnclassifiedStaged(t)) {
         return true
       }
     }
     return false
+  }
+
+  /**
+   * Returns true if the transaction is staged and not classified
+   * @param transaction
+   */
+  isUnclassifiedStaged(transaction: Transaction): boolean {
+    return transaction.stagedDesc !== undefined && transaction.fromId === ''
   }
 
   /**
