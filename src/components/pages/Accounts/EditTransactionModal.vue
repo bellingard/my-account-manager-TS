@@ -84,14 +84,15 @@ export default Vue.extend({
       this.$emit('closed')
     },
     updateTransaction() {
+      const realTransaction = this.$transactions.get(this.transaction.id)
       if (this.newPayeeName) {
         let newPayee = this.$payees.addPayee(this.newPayeeName)
-        this.transaction.payeeId = newPayee.id
+        realTransaction.payeeId = newPayee.id
       } else {
-        this.transaction.payeeId = this.payeeId
+        realTransaction.payeeId = this.payeeId
       }
-      this.transaction.fromId = this.categoryId
-      this.transaction.desc = this.description
+      realTransaction.fromId = this.categoryId
+      realTransaction.desc = this.description
       this.$emit('saved')
     },
     adaptPayeeField() {
