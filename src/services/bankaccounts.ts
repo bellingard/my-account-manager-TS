@@ -88,7 +88,7 @@ export class BankAccounts {
   }
 
   /**
-   * Returns the monthly statistics for the given account, for the 12 months 
+   * Returns the monthly statistics for the given account, for the 12 months
    * prior to the given date
    * @param accountId
    * @param date
@@ -96,7 +96,7 @@ export class BankAccounts {
   statsForPreviousYear(accountId: string, date: Date): MonthlyStats[] {
     const oneYearBefore = this.oneYearBeforeDate(date)
     return _.chain(this.transactions.listForAccount(accountId))
-      .filter(t => t.date >= oneYearBefore)
+      .filter(t => t.date >= oneYearBefore && t.date < date.toISOString())
       .groupBy(t => t.date.substring(0, 7))
       .map(this.computeMonthlyStats)
       .sortBy(s => s.date)

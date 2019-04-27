@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 export default {
   name: 'evolution-chart',
   extends: Bar,
-  props: ['accountId'],
+  props: ['accountId', 'year'],
 
   data() {
     return {
@@ -25,7 +25,11 @@ export default {
 
   computed: {
     chartData() {
-      const stats = this.$accounts.statsForPreviousYear(this.accountId, new Date())
+      let dateForPreviousYear = new Date()
+      if (this.year) {
+        dateForPreviousYear = new Date(this.year, 0, 1)
+      }
+      const stats = this.$accounts.statsForPreviousYear(this.accountId, dateForPreviousYear)
       return {
         labels: _.chain(stats)
           .map(s => this.$format.month(s.date))
@@ -64,6 +68,9 @@ export default {
 
   watch: {
     accountId: function(newAccountId) {
+      this.renderChart(this.chartData, this.chartOptions)
+    },
+    year: function(newAccountId) {
       this.renderChart(this.chartData, this.chartOptions)
     }
   }

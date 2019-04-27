@@ -22,12 +22,7 @@
 
         <v-flex xs3 v-if="selectedAccount != null" class="pr-2">
           <card-main-info :accountId="selectedAccount" @synced="refreshAccount"></card-main-info>
-          <div class="mt-2">
-            <v-card class="pa-2">
-              <v-card-title>Yearly Evolution</v-card-title>
-              <evolution-chart :accountId="getAccountId()" :height="300"></evolution-chart>
-            </v-card>
-          </div>
+          <card-evolution-chart :accountId="selectedAccount" class="mt-2"></card-evolution-chart>
           <div class="mt-2">
             <v-card class="pa-2">
               <v-text-field
@@ -118,9 +113,9 @@
 import Vue from 'vue'
 import * as _ from 'lodash'
 import CardMainInfo from './cards/CardMainInfo.vue'
+import CardEvolutionChart from './cards/CardEvolutionChart.vue'
 import EditTransactionModal from './Accounts/EditTransactionModal.vue'
 import EditCardPaymentsModal from './Accounts/EditCardPaymentsModal.vue'
-import EvolutionChart from './Accounts/EvolutionChart.vue'
 import { BankAccount } from '@/services/bankaccounts'
 import { Transaction } from '@/services/transactions'
 
@@ -129,9 +124,9 @@ export default Vue.extend({
 
   components: {
     CardMainInfo,
+    CardEvolutionChart,
     EditTransactionModal,
-    EditCardPaymentsModal,
-    EvolutionChart
+    EditCardPaymentsModal
   },
 
   props: ['accountId'],
