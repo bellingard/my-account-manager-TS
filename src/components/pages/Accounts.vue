@@ -117,7 +117,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import * as _ from 'lodash'
-import CardMainInfo from './Accounts/CardMainInfo.vue'
+import CardMainInfo from './cards/CardMainInfo.vue'
 import EditTransactionModal from './Accounts/EditTransactionModal.vue'
 import EditCardPaymentsModal from './Accounts/EditCardPaymentsModal.vue'
 import EvolutionChart from './Accounts/EvolutionChart.vue'

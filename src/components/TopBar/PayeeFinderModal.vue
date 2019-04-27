@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="pfModal" persistent width="50%">
+  <v-dialog v-if="this.$storage.repo()" v-model="pfModal" persistent width="50%">
     <v-btn icon slot="activator">
       <v-icon>add_circle_outline</v-icon>
     </v-btn>

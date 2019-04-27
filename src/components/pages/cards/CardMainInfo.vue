@@ -2,7 +2,7 @@
   <v-card class="pa-2">
     <v-layout>
       <v-flex xs3>
-        <v-avatar size="64px" class="mb-2">
+        <v-avatar size="50px" class="mb-2">
           <img :src="icon">
         </v-avatar>
       </v-flex>
@@ -17,7 +17,14 @@
       </v-flex>
     </v-layout>
     <v-divider light></v-divider>
-    <v-card-actions>
+    <v-card-actions v-if="this.overview">
+      <v-spacer></v-spacer>
+      <i class="mr-1">More details</i>
+      <v-btn icon :to="'/accounts/' + this.accountId">
+        <v-icon>keyboard_arrow_right</v-icon>
+      </v-btn>
+    </v-card-actions>
+    <v-card-actions v-if="!this.overview">
       Actions
       <v-spacer></v-spacer>
       <v-btn icon class="blue--text darken-1" @click="switchFavorite">
@@ -37,7 +44,7 @@ export default Vue.extend({
 
   components: { SynchronizeModal },
 
-  props: ['accountId'],
+  props: ['accountId', 'overview'],
 
   data() {
     return {

@@ -23,28 +23,17 @@
 
     <v-container fluid>
       <v-layout row wrap>
-        <v-flex xs6>
+        <v-flex xs3>
           <v-switch label="Favorites Only" v-model="favoritesOnly" color="blue darken-1"></v-switch>
-          <v-list two-line dense>
-            <template v-for="(item, index) in accounts">
-              <v-divider v-if="index > 0" :inset="true" :key="index"></v-divider>
-              <v-list-tile avatar :key="item.id" :to="'/accounts/' + item.id">
-                <v-list-tile-avatar>
-                  <img :src="$institutions.icon(item.institutionId)">
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                  <v-list-tile-title v-html="item.name"></v-list-tile-title>
-                  <v-list-tile-sub-title v-html="item.accountNumber"></v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                  <v-list-tile-action-text>{{ $format.amount($accounts.getBalance(item.id)) }} &euro;</v-list-tile-action-text>
-                  <v-icon
-                    class="grey--text text--lighten-1"
-                  >{{ item.favorite ? 'star' : 'star_border' }}</v-icon>
-                </v-list-tile-action>
-              </v-list-tile>
-            </template>
-          </v-list>
+          <template v-for="item in accounts">
+            <card-main-info
+              :key="item.id"
+              :accountId="item.id"
+              :overview="true"
+              @synced="refreshAccounts"
+              class="ma-2"
+            ></card-main-info>
+          </template>
         </v-flex>
       </v-layout>
     </v-container>
@@ -55,34 +44,32 @@
 import Vue from 'vue'
 import path from 'path'
 import * as _ from 'lodash'
-import { BankAccounts, BankAccount } from '../../services/bankaccounts'
-import { Transactions } from '../../services/transactions'
-import { Payees } from '../../services/payees'
-import { Institutions } from '../../services/institutions'
-import { Categories } from '../../services/categories'
+import CardMainInfo from './cards/CardMainInfo.vue'
+import { BankAccounts, BankAccount } from '@/services/bankaccounts'
+import { Transactions } from '@/services/transactions'
+import { Payees } from '@/services/payees'
+import { Institutions } from '@/services/institutions'
+import { Categories } from '@/services/categories'
 
 export default Vue.extend({
   name: 'dashboard',
+
+  components: { CardMainInfo },
 
   data() {
     return {
       favoritesOnly: true,
       accountFile: '',
+      allAccounts: this.$storage.repo() ? this.$accounts.list() : [],
       selectFolder: !this.$storage.repo()
     }
   },
 
   computed: {
     accounts(): BankAccount[] {
-      // Warn: need to rely on 'this.selectFolder' to be sure that
-      // the component will get refreshed once the folder is selected
-      if (this.selectFolder) {
-        return []
-      } else {
-        return _.chain(this.$accounts.list())
-          .filter(a => (this.favoritesOnly ? a.favorite : true))
-          .value()
-      }
+      return _.chain(this.allAccounts)
+        .filter(a => (this.favoritesOnly ? a.favorite : true))
+        .value()
     }
   },
 
@@ -90,6 +77,10 @@ export default Vue.extend({
     getFileName(e: any) {
       const files = e.target.files
       this.accountFile = files[0].path
+    },
+
+    refreshAccounts() {
+      this.allAccounts = this.$accounts.list()
     },
 
     loadData() {
@@ -106,8 +97,8 @@ export default Vue.extend({
         Vue.prototype.$categories = new Categories(this.$storage)
         // and continue
         this.$appConfig.save()
-        this.selectFolder = false
         this.accountFile = ''
+        this.refreshAccounts()
       } catch (e) {
         console.error(e)
       }
