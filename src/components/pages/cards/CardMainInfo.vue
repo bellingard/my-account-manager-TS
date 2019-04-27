@@ -1,8 +1,8 @@
 <template>
   <v-card class="pa-2">
     <v-layout>
-      <v-flex xs3>
-        <v-avatar size="50px" class="mb-2">
+      <v-flex xs3 class="text-xs-center">
+        <v-avatar size="50px" class="mb-2 mt-2">
           <img :src="icon">
         </v-avatar>
       </v-flex>
@@ -19,7 +19,7 @@
     <v-divider light></v-divider>
     <v-card-actions v-if="this.overview">
       <v-spacer></v-spacer>
-      <i class="mr-1">More details</i>
+      <i class="mr-1">{{ this.name }}</i>
       <v-btn icon :to="'/accounts/' + this.accountId">
         <v-icon>keyboard_arrow_right</v-icon>
       </v-btn>
@@ -56,6 +56,9 @@ export default Vue.extend({
   computed: {
     icon(): string {
       return this.$institutions.icon(this.$accounts.get(this.accountId).institutionId)
+    },
+    name(): string {
+      return this.$accounts.get(this.accountId).name
     },
     balance(): string {
       if (this.forceRecompute > 0) {
