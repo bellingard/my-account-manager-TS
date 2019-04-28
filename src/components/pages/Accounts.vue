@@ -22,7 +22,11 @@
 
         <v-flex xs3 v-if="selectedAccount != null" class="pr-2">
           <card-main-info :accountId="selectedAccount" @synced="refreshAccount"></card-main-info>
-          <card-evolution-chart :accountId="selectedAccount" class="mt-2"></card-evolution-chart>
+          <card-evolution-chart
+            :accountId="selectedAccount"
+            class="mt-2"
+            @monthSelected="monthSelected"
+          ></card-evolution-chart>
           <div class="mt-2">
             <v-card class="pa-2">
               <v-text-field
@@ -38,6 +42,14 @@
                 v-model="nonClassifiedOnly"
                 color="blue darken-1"
               ></v-switch>
+              <v-chip
+                v-model="filterByMonthChip"
+                close
+                label
+                outline
+                small
+                @input="filterByMonthChip = false; filterByMonth = ''"
+              >{{this.filterByMonth}}</v-chip>
             </v-card>
           </div>
         </v-flex>
@@ -162,6 +174,8 @@ export default Vue.extend({
       showClosed: false,
       search: '',
       nonClassifiedOnly: false,
+      filterByMonth: '',
+      filterByMonthChip: false,
       allTransactions: (this as any).retrieveAllTransactions(),
       editTransaction: null as Transaction | null,
       editTransactionModal: false,
@@ -184,6 +198,11 @@ export default Vue.extend({
       if (this.getAccountId() != null) {
         return _.chain(this.allTransactions)
           .filter(t => (this.nonClassifiedOnly ? this.$transactions.isUnclassifiedStaged(t) : true))
+          .filter(t =>
+            this.filterByMonth === ''
+              ? true
+              : t.date >= this.filterByMonth + '-00' && t.date < this.filterByMonth + '-32'
+          )
           .map(t =>
             Object.assign({}, t, {
               payeeName: t.payeeId ? this.$payees.name(t.payeeId) : '',
@@ -248,6 +267,10 @@ export default Vue.extend({
       this.allTransactions = this.retrieveAllTransactions()
       this.closeTransactionModal()
       this.closeCardModal()
+    },
+    monthSelected(month: string) {
+      this.filterByMonth = month
+      this.filterByMonthChip = true
     }
   }
 })

@@ -9,6 +9,7 @@ export default {
 
   data() {
     return {
+      stats: this.$accounts.statsForPreviousYear(this.accountId, new Date()),
       chartOptions: {
         legend: { display: false },
         title: { display: false },
@@ -18,7 +19,8 @@ export default {
               stacked: true
             }
           ]
-        }
+        },
+        onClick: this.clicked
       }
     }
   },
@@ -29,9 +31,9 @@ export default {
       if (this.year) {
         dateForPreviousYear = new Date(this.year, 0, 1)
       }
-      const stats = this.$accounts.statsForPreviousYear(this.accountId, dateForPreviousYear)
+      this.stats = this.$accounts.statsForPreviousYear(this.accountId, dateForPreviousYear)
       return {
-        labels: _.chain(stats)
+        labels: _.chain(this.stats)
           .map(s => this.$format.month(s.date))
           .value(),
         datasets: [
@@ -40,20 +42,20 @@ export default {
             borderColor: '#ffc107',
             borderWidth: 2,
             pointRadius: 2,
-            data: _.chain(stats)
+            data: _.chain(this.stats)
               .map(s => this.$format.amount(s.total))
               .value(),
             type: 'line'
           },
           {
             backgroundColor: '#4caf50',
-            data: _.chain(stats)
+            data: _.chain(this.stats)
               .map(s => this.$format.amount(s.credits))
               .value()
           },
           {
             backgroundColor: '#f44336',
-            data: _.chain(stats)
+            data: _.chain(this.stats)
               .map(s => this.$format.amount(s.debits))
               .value()
           }
@@ -72,6 +74,15 @@ export default {
     },
     year: function(newAccountId) {
       this.renderChart(this.chartData, this.chartOptions)
+    }
+  },
+
+  methods: {
+    clicked(event, activeElements) {
+      if (activeElements[0]) {
+        const itemIndex = activeElements[0]._index
+        this.$emit('monthSelected', this.stats[itemIndex].date.substring(0, 7))
+      }
     }
   }
 }

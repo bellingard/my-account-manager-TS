@@ -1,6 +1,12 @@
 <template>
   <v-card class="pa-2">
-    <evolution-chart :accountId="accountId" :year="selectedYear" :height="300" class="mt-3"></evolution-chart>
+    <evolution-chart
+      :accountId="accountId"
+      :year="selectedYear"
+      :height="300"
+      class="mt-3"
+      @monthSelected="monthSelected"
+    ></evolution-chart>
     <v-divider light></v-divider>
     <v-card-actions>
       Yearly Evolution ({{ this.selectedYear ? this.selectedYear : 'last 12 months'}})
@@ -49,6 +55,9 @@ export default Vue.extend({
           this.selectedYear = this.selectedYear + 1
         }
       }
+    },
+    monthSelected(month: string) {
+      this.$emit('monthSelected', month)
     }
   },
 
