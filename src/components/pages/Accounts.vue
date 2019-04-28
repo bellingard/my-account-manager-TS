@@ -93,7 +93,10 @@
                 >{{ props.item.stagedDesc }}</div>
               </td>
               <td class="text-xs-center">
-                <div>{{ props.item.categoryName }}</div>
+                <div
+                  v-if="$transactions.isTransfer(props.item)"
+                >Transfer ({{ selectedAccount === props.item.fromId ? $accounts.name(props.item.toId) : $accounts.name(props.item.fromId)}})</div>
+                <div v-else>{{ props.item.categoryName }}</div>
               </td>
               <td
                 class="text-xs-right"
