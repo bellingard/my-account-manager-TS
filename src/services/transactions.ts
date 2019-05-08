@@ -13,6 +13,7 @@ export interface Transaction {
   fromId: string
   payeeId?: string
   stagedDesc?: string
+  unusual?: boolean
 }
 
 export class Transactions {

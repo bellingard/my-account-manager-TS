@@ -47,7 +47,10 @@
               required
             ></v-autocomplete>
           </v-flex>
-          <v-flex xs12 class="mt-4">
+          <v-flex xs12>
+            <v-switch label="Unusual transaction" v-model="unusual" color="blue darken-1"></v-switch>
+          </v-flex>
+          <v-flex xs12>
             <v-textarea outline label="Description" rows="3" v-model="description"></v-textarea>
           </v-flex>
         </v-layout>
@@ -74,6 +77,7 @@ export default Vue.extend({
       payeeId: '',
       categoryId: '',
       description: '',
+      unusual: false,
       showNewPayeeField: false,
       newPayeeName: ''
     }
@@ -92,6 +96,7 @@ export default Vue.extend({
         realTransaction.payeeId = this.payeeId
       }
       realTransaction.fromId = this.categoryId
+      realTransaction.unusual = this.unusual
       realTransaction.desc = this.description
       this.$emit('saved')
     },
@@ -107,6 +112,7 @@ export default Vue.extend({
     transaction: function(newTransaction) {
       if (newTransaction) {
         this.categoryId = newTransaction.fromId
+        this.unusual = newTransaction.unusual
         this.description = newTransaction.desc
         this.payeeId = newTransaction.payeeId
         this.showNewPayeeField = false

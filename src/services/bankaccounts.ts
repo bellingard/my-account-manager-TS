@@ -117,13 +117,13 @@ export class BankAccounts {
     transactions.forEach(t => {
       if (
         // "other expenses"
-        t.fromId === 'A120' || // 'Axxx' is the old format of categories...
         t.fromId === 'C120' ||
         // "other revenues"
-        t.fromId === 'A159' || // 'Axxx' is the old format of categories...
         t.fromId === 'C159' ||
         // Bank transferts - cannot use "this.transactions.isTransfer()" here...
-        (BankAccounts.isValidID(t.fromId) && BankAccounts.isValidID(t.toId))
+        (BankAccounts.isValidID(t.fromId) && BankAccounts.isValidID(t.toId)) ||
+        // Unusual transactions are also ignored
+        t.unusual
       ) {
         // Let's not count them
         return
