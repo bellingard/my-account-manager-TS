@@ -13,7 +13,7 @@ const mockRepo = {
       id: 'B1',
       institutionId: 'I1',
       name: 'Account B1',
-      parentId: 'A170'
+      parentId: 'C170'
     },
     B164: {
       accountNumber: '67890',
@@ -22,13 +22,13 @@ const mockRepo = {
       id: 'B164',
       institutionId: 'I2',
       name: 'Account B164',
-      parentId: 'A170'
+      parentId: 'C170'
     }
   },
   transactions: {
-    T1000: { amount: -4651, date: '2012-02-02', desc: '', fromId: 'A22', id: 'T1000', payeeId: 'P40', toId: 'B1' },
-    T1001: { amount: 1166, date: '2012-02-03', desc: '', fromId: 'A87', id: 'T1001', payeeId: 'P13', toId: 'B164' },
-    T1002: { amount: -2618, date: '2012-02-03', desc: '', fromId: 'A22', id: 'T1002', payeeId: 'P13', toId: 'B164' },
+    T1000: { amount: -4651, date: '2012-02-02', desc: '', fromId: 'C22', id: 'T1000', payeeId: 'P40', toId: 'B1' },
+    T1001: { amount: 1166, date: '2012-02-03', desc: '', fromId: 'C87', id: 'T1001', payeeId: 'P13', toId: 'B164' },
+    T1002: { amount: -2618, date: '2012-02-03', desc: '', fromId: 'C22', id: 'T1002', payeeId: 'P13', toId: 'B164' },
     T1003: { amount: 1000, date: '2012-02-06', desc: '', fromId: 'B164', id: 'T1003', payeeId: 'P47', toId: 'B1' }
   }
 }
@@ -53,7 +53,7 @@ const bankAccounts = new BankAccounts(storage, transactions)
 describe('BankAccounts', () => {
   it('should tell valid ID', () => {
     expect(BankAccounts.isValidID('B123')).toEqual(true)
-    expect(BankAccounts.isValidID('A123')).toEqual(false)
+    expect(BankAccounts.isValidID('C123')).toEqual(false)
   })
 
   it('should list non closed accounts by default', () => {
@@ -73,7 +73,7 @@ describe('BankAccounts', () => {
       id: 'B1',
       institutionId: 'I1',
       name: 'Account B1',
-      parentId: 'A170'
+      parentId: 'C170'
     })
     expect(bankAccounts.get('unknown_ID')).toBeUndefined()
   })
@@ -105,10 +105,10 @@ describe('BankAccounts', () => {
   it('should compute monthly stats for the given transactions', () => {
     const transactions = [
       { amount: 1000, fromId: 'B1', toId: 'B2', date: '2019-02-01', desc: '', id: '', payeeId: '' },
-      { amount: 1100, fromId: 'A1', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
-      { amount: -2600, fromId: 'A2', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
-      { amount: 1000, fromId: 'A120', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
-      { amount: 1000, fromId: 'A159', toId: 'B1', date: '', desc: '', id: '', payeeId: '' }
+      { amount: 1100, fromId: 'C1', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
+      { amount: -2600, fromId: 'C2', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
+      { amount: 1000, fromId: 'C120', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
+      { amount: 1000, fromId: 'C159', toId: 'B1', date: '', desc: '', id: '', payeeId: '' }
     ]
     expect(bankAccounts.computeMonthlyStats(transactions)).toEqual({
       date: '2019-02-01',
