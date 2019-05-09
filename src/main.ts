@@ -35,6 +35,7 @@ if (storage.repo()) {
   Vue.prototype.$categories = new Categories(storage)
 }
 
+// This is the main Vue
 new Vue({
   router,
   render: h => h(App)
