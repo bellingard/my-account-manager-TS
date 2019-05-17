@@ -29,7 +29,7 @@ export default {
     chartData() {
       let dateForPreviousYear = new Date()
       if (this.year) {
-        dateForPreviousYear = new Date(this.year, 0, 1)
+        dateForPreviousYear = new Date(this.year + 1, 0, 1)
       }
       this.stats = this.$accounts.statsForPreviousYear(this.accountId, dateForPreviousYear)
       return {
