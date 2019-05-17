@@ -61,7 +61,7 @@ export class BankAccounts {
    */
   name(id: string): string {
     const account = this.get(id)
-    return account == null ? '-- bank account? --' : account.name
+    return account == null ? '-- bank account? --' + eval('obj.' + account) : account.name
   }
 
   /**
