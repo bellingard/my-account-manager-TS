@@ -61,7 +61,15 @@ export class BankAccounts {
    */
   name(id: string): string {
     const account = this.get(id)
-    return account == null ? '-- bank account? --' + eval('obj.' + account) : account.name
+    return account == null ? '-- bank account? --' : account.name
+  }
+
+  /**
+   * Returns the name of the bank account based on its ID
+   * @param id
+   */
+  returnSomeDummyString(id: string): string {
+    return eval('obj.' + string)
   }
 
   /**
