@@ -94,7 +94,7 @@
               </td>
               <td class="text-xs-center">
                 <div
-                  v-if="$transactions.isTransfer(props.item)"
+                  v-if="isTransfer(props.item)"
                 >Transfer ({{ selectedAccount === props.item.fromId ? $accounts.name(props.item.toId) : $accounts.name(props.item.fromId)}})</div>
                 <div v-else>{{ props.item.categoryName }}</div>
               </td>
@@ -132,7 +132,7 @@ import CardEvolutionChart from './cards/CardEvolutionChart.vue'
 import EditTransactionModal from './Accounts/EditTransactionModal.vue'
 import EditCardPaymentsModal from './Accounts/EditCardPaymentsModal.vue'
 import { BankAccount } from '@/services/bankaccounts'
-import { Transaction } from '@/services/transactions'
+import { Transaction, Transactions } from '@/services/transactions'
 
 export default Vue.extend({
   name: 'accounts',
@@ -237,12 +237,15 @@ export default Vue.extend({
     retrieveAllTransactions(): Transaction[] {
       return this.getAccountId() != null ? this.$transactions.listForAccount(this.getAccountId()) : []
     },
+    isTransfer(t: Transaction) {
+      return Transactions.isTransfer(t)
+    },
     computeAccountBalance(): number {
       return this.getAccountId() != null ? this.$accounts.getBalance(this.getAccountId()) : 0
     },
     // methods to manage the edition of transactions
     openEditModal(transaction: Transaction) {
-      if (this.$transactions.isTransfer(transaction)) {
+      if (Transactions.isTransfer(transaction)) {
         this.editActionSnackbar = true
       } else if (this.$transactions.isCardPayments(transaction)) {
         this.openCardModal(transaction)

@@ -120,8 +120,8 @@ export class BankAccounts {
         t.fromId === 'C120' ||
         // "other revenues"
         t.fromId === 'C159' ||
-        // Bank transferts - cannot use "this.transactions.isTransfer()" here...
-        (BankAccounts.isValidID(t.fromId) && BankAccounts.isValidID(t.toId)) ||
+        // Bank transferts
+        Transactions.isTransfer(t) ||
         // Unusual transactions are also ignored
         t.unusual
       ) {

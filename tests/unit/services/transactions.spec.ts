@@ -42,9 +42,9 @@ const transactions = new Transactions(storage, new Payees(storage))
 describe('Transactions', () => {
   it('should tell if transfer or not', () => {
     const transfer = { amount: -0, date: '2012-02-02', fromId: 'B1', id: 'T1', payeeId: 'P0', toId: 'B2', desc: '' }
-    expect(transactions.isTransfer(transfer)).toEqual(true)
+    expect(Transactions.isTransfer(transfer)).toEqual(true)
     const standard = { amount: -1, date: '2012-02-02', desc: '', fromId: 'A2', id: 'T1', payeeId: 'P4', toId: 'B3' }
-    expect(transactions.isTransfer(standard)).toEqual(false)
+    expect(Transactions.isTransfer(standard)).toEqual(false)
   })
 
   it('should tell if transaction is a card payments or not', () => {

@@ -31,7 +31,7 @@ export class Transactions {
    * Tells whether the transaction is a transfer or not
    * @param transaction
    */
-  isTransfer(transaction: Transaction): boolean {
+  static isTransfer(transaction: Transaction): boolean {
     return BankAccounts.isValidID(transaction.toId) && BankAccounts.isValidID(transaction.fromId)
   }
 
