@@ -14,6 +14,7 @@ import { Institutions } from './services/institutions'
 import { Categories } from './services/categories'
 import Formatter from './services/utils/formatter'
 import { CsvLoader } from './services/utils/csv-loader'
+import { Stats } from './services/stats';
 
 Vue.config.productionTip = false
 
@@ -31,6 +32,7 @@ if (storage.repo()) {
   Vue.prototype.$transactions = new Transactions(storage, payees)
   const transactions = Vue.prototype.$transactions
   Vue.prototype.$accounts = new BankAccounts(storage, transactions)
+  Vue.prototype.$stats = new Stats(storage, transactions)
   Vue.prototype.$institutions = new Institutions(storage)
   Vue.prototype.$categories = new Categories(storage)
 }

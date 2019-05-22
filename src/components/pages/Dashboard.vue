@@ -50,6 +50,7 @@ import { Transactions } from '@/services/transactions'
 import { Payees } from '@/services/payees'
 import { Institutions } from '@/services/institutions'
 import { Categories } from '@/services/categories'
+import { Stats } from '../../services/stats'
 
 export default Vue.extend({
   name: 'dashboard',
@@ -93,6 +94,7 @@ export default Vue.extend({
         Vue.prototype.$transactions = new Transactions(this.$storage, payees)
         const transactions = Vue.prototype.$transactions
         Vue.prototype.$accounts = new BankAccounts(this.$storage, transactions)
+        Vue.prototype.$stats = new Stats(this.$storage, transactions)
         Vue.prototype.$institutions = new Institutions(this.$storage)
         Vue.prototype.$categories = new Categories(this.$storage)
         // and continue
