@@ -19,6 +19,7 @@ export class Payees {
   constructor(storage: Storage) {
     this.storage = storage
     this.counter = storage.findNextCounter(this.list())
+    alert('foo')
   }
 
   /**
