@@ -38,11 +38,10 @@
           <v-flex xs12>
             <v-autocomplete
               label="Category"
-              :items="$categories.list()"
-              item-text="name"
+              :items="categories"
+              item-text="fullName"
               item-value="id"
               v-model="categoryId"
-              :hint="$categories.fullName(this.categoryId)"
               persistent-hint
               required
             ></v-autocomplete>
@@ -80,6 +79,18 @@ export default Vue.extend({
       unusual: false,
       showNewPayeeField: false,
       newPayeeName: ''
+    }
+  },
+
+  computed: {
+    categories(): any[] {
+      return _.chain(this.$categories.list())
+        .map(c =>
+          Object.assign({}, c, {
+            fullName: this.$categories.fullName(c.id)
+          })
+        )
+        .value()
     }
   },
 
