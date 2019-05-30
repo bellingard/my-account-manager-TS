@@ -39,6 +39,7 @@
                   class="state-icon grey--text"
                 >{{ props.item.hidden ? 'visibility_off' : 'visibility' }}</v-icon>
               </td>
+              <td class="text-xs-right grey--text text--darken-1 caption pl-1 pr-1">{{ props.item.id }}</td>
               <td class="text-xs-left">{{ props.item.fullName }}</td>
               <td class="text-xs-right">
                 <span
@@ -74,6 +75,7 @@ export default Vue.extend({
     return {
       headers: [
         { text: '', value: 'hidden', align: 'right' },
+        { text: 'ID', value: 'id', align: 'right', width: '10px', class: 'pl-1 pr-1' },
         { text: 'Name', value: 'fullName', align: 'left' },
         { text: 'Transaction Count', value: 'transactionCount', align: 'right' },
         { text: 'Actions', value: 'actions', align: 'right', sortable: false }

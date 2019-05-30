@@ -22,8 +22,10 @@
             class="elevation-3"
           >
             <template slot="items" slot-scope="props">
+              <td
+                class="text-xs-right grey--text text--darken-1 caption pl-1 pr-1"
+              >{{ props.item.id }}</td>
               <td class="text-xs-left">{{ props.item.name }}</td>
-              <td class="text-xs-right">{{ props.item.id }}</td>
             </template>
           </v-data-table>
         </v-flex>
@@ -40,7 +42,10 @@ export default Vue.extend({
 
   data() {
     return {
-      headers: [{ text: 'Name', value: 'name', align: 'left' }, { text: 'ID', value: 'id' }],
+      headers: [
+        { text: 'ID', value: 'id', align: 'right', width: '60px', class: 'pl-1 pr-1' },
+        { text: 'Name', value: 'name', align: 'left' }
+      ],
       pagination: {
         size: [12, 25, 50, 100],
         sort: {

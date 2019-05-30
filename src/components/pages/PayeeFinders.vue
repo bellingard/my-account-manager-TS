@@ -23,14 +23,14 @@
             <template slot="items" slot-scope="props">
               <td class="text-xs-left">{{ props.item.expr }}</td>
               <td class="text-xs-right">
-                {{ props.item.cat }}
+                {{$categories.name(props.item.cat)}}
                 <br>
-                <strong>{{$categories.name(props.item.cat)}}</strong>
+                <span class="text-xs-right grey--text text--darken-1 caption">{{ props.item.cat }}</span>
               </td>
               <td class="text-xs-right">
-                {{ props.item.payee }}
+                {{$payees.name(props.item.payee)}}
                 <br>
-                <strong>{{$payees.name(props.item.payee)}}</strong>
+                <span class="text-xs-right grey--text text--darken-1 caption">{{ props.item.payee }}</span>
               </td>
             </template>
           </v-data-table>
@@ -50,8 +50,8 @@ export default Vue.extend({
     return {
       headers: [
         { text: 'Expression', value: 'expr', sortable: false, align: 'left' },
-        { text: 'Category', value: 'cat', sortable: false },
-        { text: 'Payee', value: 'payee', sortable: false }
+        { text: 'Category', value: 'cat', sortable: false, align: 'right' },
+        { text: 'Payee', value: 'payee', sortable: false, align: 'right' }
       ],
       pagination: {
         size: [12, 25, 50, 100]
