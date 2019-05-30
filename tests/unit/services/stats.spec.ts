@@ -1,7 +1,8 @@
 import Storage from '@/services/utils/storage'
 import { Transactions } from '@/services/transactions'
+import { BankAccounts } from '@/services/bankaccounts'
 import { Payees } from '@/services/payees'
-import { Stats } from '@/services/stats';
+import { Stats } from '@/services/stats'
 
 // Mock Storage
 const mockRepo = {
@@ -23,13 +24,23 @@ const mockRepo = {
       institutionId: 'I2',
       name: 'Account B164',
       parentId: 'C170'
+    },
+    B211: {
+      accountNumber: '23769',
+      closed: false,
+      favorite: true,
+      id: 'B211',
+      institutionId: 'I2',
+      name: 'Account B211',
+      parentId: 'C170'
     }
   },
   transactions: {
     T1000: { amount: -4651, date: '2012-02-02', desc: '', fromId: 'C22', id: 'T1000', payeeId: 'P40', toId: 'B1' },
     T1001: { amount: 1166, date: '2012-02-03', desc: '', fromId: 'C87', id: 'T1001', payeeId: 'P13', toId: 'B164' },
     T1002: { amount: -2618, date: '2012-02-03', desc: '', fromId: 'C22', id: 'T1002', payeeId: 'P13', toId: 'B164' },
-    T1003: { amount: 1000, date: '2012-02-06', desc: '', fromId: 'B164', id: 'T1003', payeeId: 'P47', toId: 'B1' }
+    T1003: { amount: 1000, date: '2012-02-06', desc: '', fromId: 'B164', id: 'T1003', payeeId: 'P47', toId: 'B1' },
+    T1004: { amount: 2050, date: '2012-02-16', desc: '', fromId: 'C23', id: 'T1004', payeeId: 'P47', toId: 'B211' }
   }
 }
 jest.mock('@/services/utils/storage', () => {
@@ -48,7 +59,8 @@ jest.mock('@/services/utils/storage', () => {
 // And start the tests
 const storage = new Storage({ storageFolder: '' })
 const transactions = new Transactions(storage, new Payees(storage))
-const stats = new Stats(storage, transactions)
+const bankAccounts = new BankAccounts(storage, transactions)
+const stats = new Stats(storage, transactions, bankAccounts)
 
 describe('Stats', () => {
   it('should compute one year before date', () => {
@@ -66,7 +78,7 @@ describe('Stats', () => {
       { amount: 1000, fromId: 'C120', toId: 'B1', date: '', desc: '', id: '', payeeId: '' },
       { amount: 1000, fromId: 'C159', toId: 'B1', date: '', desc: '', id: '', payeeId: '' }
     ]
-    expect(stats.computeMonthlyStats(transactions)).toEqual({
+    expect(stats.computeMonthlyStats(transactions, false)).toEqual({
       date: '2019-02-01',
       total: -1500,
       debits: -2600,
@@ -75,14 +87,45 @@ describe('Stats', () => {
   })
 
   it('should compute stats for previous year', () => {
-    expect(stats.statsForPreviousYear('B164', new Date(2013, 1, 1))).toEqual([
+    expect(stats.statsForPreviousYear(['B164'], new Date(2013, 1, 1), false)).toEqual([
       {
-        credits: 1166,
         date: '2012-02-03',
+        total: -1452,
         debits: -2618,
-        total: -1452
+        credits: 1166
       }
     ])
-    expect(stats.statsForPreviousYear('B164', new Date(2013, 2, 1))).toEqual([])
+    expect(stats.statsForPreviousYear(['B164'], new Date(2013, 2, 1), false)).toEqual([])
+  })
+
+  it('should compute stats with details', () => {
+    expect(stats.statsForPreviousYear(['B164'], new Date(2013, 1, 1), true)).toEqual([
+      {
+        date: '2012-02-03',
+        total: -1452,
+        debits: -2618,
+        credits: 1166,
+        details: {
+          C22: -2618,
+          C87: 1166
+        }
+      }
+    ])
+  })
+
+  it('should compute budget', () => {
+    expect(stats.budgetForPreviousYear(new Date(2013, 1, 1))).toEqual([
+      {
+        date: '2012-02-03',
+        total: 598,
+        debits: -2618,
+        credits: 3216,
+        details: {
+          C22: -2618,
+          C87: 1166,
+          C23: 2050
+        }
+      }
+    ])
   })
 })

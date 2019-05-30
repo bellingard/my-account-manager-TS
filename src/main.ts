@@ -32,7 +32,7 @@ if (storage.repo()) {
   Vue.prototype.$transactions = new Transactions(storage, payees)
   const transactions = Vue.prototype.$transactions
   Vue.prototype.$accounts = new BankAccounts(storage, transactions)
-  Vue.prototype.$stats = new Stats(storage, transactions)
+  Vue.prototype.$stats = new Stats(storage, transactions, Vue.prototype.$accounts)
   Vue.prototype.$institutions = new Institutions(storage)
   Vue.prototype.$categories = new Categories(storage)
 }

@@ -9,7 +9,7 @@ export default {
 
   data() {
     return {
-      stats: this.$stats.statsForPreviousYear(this.accountId, new Date()),
+      stats: this.$stats.statsForPreviousYear([this.accountId], new Date(), false),
       chartOptions: {
         legend: { display: false },
         title: { display: false },
@@ -31,7 +31,7 @@ export default {
       if (this.year) {
         dateForPreviousYear = new Date(this.year + 1, 0, 1)
       }
-      this.stats = this.$stats.statsForPreviousYear(this.accountId, dateForPreviousYear)
+      this.stats = this.$stats.statsForPreviousYear([this.accountId], dateForPreviousYear, false)
       return {
         labels: _.chain(this.stats)
           .map(s => this.$format.month(s.date))

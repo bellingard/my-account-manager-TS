@@ -69,6 +69,16 @@ export class Transactions {
   }
 
   /**
+   * Returns all transactions for the given accounts
+   * @param accountIds
+   */
+  listForAccounts(accountIds: string[]): Transaction[] {
+    return _.chain(this.list())
+      .filter(t => accountIds.includes(t.fromId) || accountIds.includes(t.toId))
+      .value()
+  }
+
+  /**
    * Returns all transactions for the given category
    * @param categoryId
    */

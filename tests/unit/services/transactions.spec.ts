@@ -103,6 +103,13 @@ describe('Transactions', () => {
     expect(transactions.listForAccount('B33')).toHaveLength(2)
   })
 
+  it('should list transactions for several accounts', () => {
+    expect(transactions.listForAccounts(['B1'])).toHaveLength(3)
+    expect(transactions.listForAccounts(['B33'])).toHaveLength(2)
+    // there is a transfer, so the total number of transactions is not 3+2=5, but 4
+    expect(transactions.listForAccounts(['B1', 'B33'])).toHaveLength(4)
+  })
+
   it('should list transactions for category', () => {
     expect(transactions.listForCategory('A22')).toHaveLength(2)
     expect(transactions.listForCategory('A87')).toHaveLength(1)

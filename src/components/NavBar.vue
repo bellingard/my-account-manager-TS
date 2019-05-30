@@ -68,6 +68,7 @@ export default Vue.extend({
       mini: true,
       manageItems: [
         { icon: 'attach_money', text: 'Accounts', to: '/accounts' },
+        { icon: '360', text: 'Budget', to: '/budget' },
         { icon: 'group_work', text: 'Categories', to: '/categories' },
         { icon: 'account_balance', text: 'Institutions', to: '/institutions' },
         { icon: 'people', text: 'Payees', to: '/payees' }
