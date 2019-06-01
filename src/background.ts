@@ -1,19 +1,16 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
-import {
-  createProtocol,
-  installVueDevtools
-} from 'vue-cli-plugin-electron-builder/lib'
+import { app, protocol, BrowserWindow, Menu } from 'electron'
+import { createProtocol, installVueDevtools } from 'vue-cli-plugin-electron-builder/lib'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win: (BrowserWindow|null)
+let win: BrowserWindow | null
 
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true })
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({ width: 800, height: 600 })
   win.maximize()
@@ -31,6 +28,73 @@ function createWindow () {
   win.on('closed', () => {
     win = null
   })
+
+  createMenu()
+}
+
+function createMenu() {
+  const application = {
+    label: 'Application',
+    submenu: [
+      {
+        label: 'About Application',
+        selector: 'orderFrontStandardAboutPanel:'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Quit',
+        accelerator: 'Command+Q',
+        click: () => {
+          app.quit()
+        }
+      }
+    ]
+  }
+
+  const edit = {
+    label: 'Edit',
+    submenu: [
+      {
+        label: 'Undo',
+        accelerator: 'CmdOrCtrl+Z',
+        selector: 'undo:'
+      },
+      {
+        label: 'Redo',
+        accelerator: 'Shift+CmdOrCtrl+Z',
+        selector: 'redo:'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        label: 'Cut',
+        accelerator: 'CmdOrCtrl+X',
+        selector: 'cut:'
+      },
+      {
+        label: 'Copy',
+        accelerator: 'CmdOrCtrl+C',
+        selector: 'copy:'
+      },
+      {
+        label: 'Paste',
+        accelerator: 'CmdOrCtrl+V',
+        selector: 'paste:'
+      },
+      {
+        label: 'Select All',
+        accelerator: 'CmdOrCtrl+A',
+        selector: 'selectAll:'
+      }
+    ]
+  }
+
+  const template: any = [application, edit]
+
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
 }
 
 // Quit when all windows are closed.
