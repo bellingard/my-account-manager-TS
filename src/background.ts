@@ -29,7 +29,9 @@ function createWindow() {
     win = null
   })
 
-  createMenu()
+  if (!isDevelopment) {
+    createMenu()
+  }
 }
 
 function createMenu() {
