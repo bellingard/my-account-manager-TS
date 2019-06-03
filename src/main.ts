@@ -14,7 +14,7 @@ import { Institutions } from './services/institutions'
 import { Categories } from './services/categories'
 import Formatter from './services/utils/formatter'
 import { CsvLoader } from './services/utils/csv-loader'
-import { Stats } from './services/stats';
+import { Stats } from './services/stats'
 
 Vue.config.productionTip = false
 

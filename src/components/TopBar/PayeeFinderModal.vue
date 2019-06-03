@@ -70,7 +70,7 @@ export default Vue.extend({
   watch: {
     pfModal: function(newPfModal) {
       if (newPfModal === true) {
-        this.expression = window.getSelection().toString()
+        this.expression = window.getSelection()!.toString()
       }
     }
   }

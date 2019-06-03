@@ -31,6 +31,7 @@ export default {
       if (this.year) {
         dateForPreviousYear = new Date(this.year + 1, 0, 1)
       }
+      // eslint-disable-next-line
       this.stats = this.$stats.statsForPreviousYear([this.accountId], dateForPreviousYear, false)
       return {
         labels: _.chain(this.stats)

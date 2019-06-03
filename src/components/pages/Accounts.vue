@@ -229,7 +229,7 @@ export default Vue.extend({
       return this.selectedAccount == null ? this.accountId : this.selectedAccount
     },
     prefillSearch() {
-      this.search = window.getSelection().toString()
+      this.search = window.getSelection()!.toString()
     },
     refreshAccount() {
       this.allTransactions = this.retrieveAllTransactions()
