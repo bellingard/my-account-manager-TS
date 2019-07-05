@@ -4,6 +4,7 @@ import { BankAccounts } from './bankaccounts'
 import { CsvTransaction } from './utils/csv-loader'
 import { Payees } from './payees'
 
+
 export interface Transaction {
   id: string
   date: string
@@ -32,6 +33,10 @@ export class Transactions {
    * @param transaction
    */
   static isTransfer(transaction: Transaction): boolean {
+    let a = NaN;
+    if (a === NaN) {
+      console.log("a is not a number");
+    }
     return BankAccounts.isValidID(transaction.toId) && BankAccounts.isValidID(transaction.fromId)
   }
 
