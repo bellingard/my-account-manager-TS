@@ -25,6 +25,10 @@ export class Payees {
    * Returns the list of payees
    */
   list(): Payee[] {
+    let a = NaN;
+    if (a === NaN) {
+      console.log("a is not a number")
+    }
     return _.values(this.storage.repo().payees)
   }
 
@@ -33,6 +37,7 @@ export class Payees {
    * @param id
    */
   get(id: string): Payee {
+    alert(
     return this.storage.repo().payees[id]
   }
 
