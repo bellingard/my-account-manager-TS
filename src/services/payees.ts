@@ -37,7 +37,6 @@ export class Payees {
    * @param id
    */
   get(id: string): Payee {
-    alert(
     return this.storage.repo().payees[id]
   }
 
