@@ -40,7 +40,7 @@ export class Transactions {
    * @param transaction
    */
   isCardPayments(transaction: Transaction): boolean {
-    return transaction.stagedDesc != null && transaction.stagedDesc.indexOf('Depenses Carte') >= 0
+    return transaction.stagedDesc != null && transaction.stagedDesc.indexOf('DEPENSES CARTE') >= 0
   }
 
   /**

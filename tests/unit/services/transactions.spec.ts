@@ -56,13 +56,13 @@ describe('Transactions', () => {
       id: '',
       payeeId: '',
       toId: '',
-      stagedDesc: 'Depenses Carte du mois de Juillet'
+      stagedDesc: 'PRELEVEMENT CARTE DEPENSES CARTE AU 21/11/2019'
     }
     expect(transactions.isCardPayments(trueCardPayment)).toEqual(true)
     const wrongCardPayment = {
       amount: -1,
       date: '',
-      desc: 'Depenses Carte du mois de Juillet',
+      desc: 'PRELEVEMENT CARTE DEPENSES CARTE AU 21/11/2019',
       fromId: '',
       id: '',
       payeeId: '',
