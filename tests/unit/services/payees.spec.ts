@@ -64,6 +64,10 @@ describe('Payees', () => {
     expect(payees.findBasedOnLabel('Medecins Sans Frontieres Account 39480098')!.payee).toEqual('P3')
   })
 
+  it('should find correct payee even when capital letters', () => {
+    expect(payees.findBasedOnLabel('MEDECINS SANS FRONTIERES ACCOUNT 39480098')!.payee).toEqual('P3')
+  })
+
   it('should find no payee', () => {
     expect(payees.findBasedOnLabel('Versement MSF')).toBeNull()
     expect(payees.findBasedOnLabel('Versement Médecins Sans Frontières')).toBeNull()

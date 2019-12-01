@@ -100,7 +100,7 @@ export class Payees {
    */
   findBasedOnLabel(label: string): Finder | null {
     for (const finder of this.finders()) {
-      if (label.search(finder.expr) >= 0) {
+      if (label.toUpperCase().search(finder.expr.toUpperCase()) >= 0) {
         return finder
       }
     }
