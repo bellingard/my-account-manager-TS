@@ -104,9 +104,9 @@ export class CsvLoader {
   }
 
   private removeUselessChars(csvContent: string) {
-    const eurosPosition = csvContent.lastIndexOf('Euros;')
+    const eurosPosition = csvContent.lastIndexOf('uros;')
     if (eurosPosition > 0) {
-      return csvContent.substr(eurosPosition + 'Euros;'.length, csvContent.length).trim()
+      return csvContent.substr(eurosPosition + 'uros;'.length, csvContent.length).trim()
     } else {
       return csvContent.trim()
     }
