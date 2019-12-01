@@ -100,7 +100,7 @@ export class CsvLoader {
   }
 
   private static turnToCents(item: string): number | null {
-    return item === '' ? null : parseInt(item.replace(',', ''))
+    return item === '' ? null : parseInt(item.replace(/\s/g, '').replace(',', ''))
   }
 
   private removeUselessChars(csvContent: string) {

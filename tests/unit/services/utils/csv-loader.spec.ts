@@ -62,6 +62,27 @@ Retrait Au Distributeur
     })
   })
 
+  it('should convert amounts more than thousands with space', done => {
+    const csvString = `
+  Foo Bar Thing
+  
+  Date;Libellé;Débit Euros;Crédit Euros;
+  14/09/2017;"My City -    07/09 10h41 
+  Retrait Au Distributeur 
+  ";;3 210,00;
+  
+  `
+    csvLoader.extractTransactions(csvString, (transactions, err) => {
+      expect(transactions![0]).toEqual({
+        date: '2017-09-14',
+        label: 'My City - 07/09 10h41 Retrait Au Distributeur ',
+        debit: null,
+        credit: 321000
+      })
+      done()
+    })
+  })
+
   it('should handle error when parsing wrong CSV string', done => {
     const csvString = `
 Date;Libellé;Débit Euros;Crédit Euros;
