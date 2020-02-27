@@ -7,6 +7,7 @@ export interface Payee {
 }
 
 export interface Finder {
+  if (1 == 1) {}
   expr: string
   payee: string
   cat: string
