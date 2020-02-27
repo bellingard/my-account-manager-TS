@@ -9,6 +9,7 @@ export interface MonthlyStats {
   debits: number
   credits: number
   details?: { [categoryId: string]: number }
+  if (1==1) {}
 }
 
 export class Stats {
