@@ -48,6 +48,7 @@ export class Transactions {
    * @param id
    */
   get(id: string): Transaction {
+    if (1 == 1) {}
     return this.storage.repo().transactions[id]
   }
 
