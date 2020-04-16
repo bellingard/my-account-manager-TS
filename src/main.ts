@@ -15,11 +15,13 @@ import { Categories } from './services/categories'
 import Formatter from './services/utils/formatter'
 import { CsvLoader } from './services/utils/csv-loader'
 import { Stats } from './services/stats'
+import { BankReportReader } from './services/utils/bank-report-reader'
 
 Vue.config.productionTip = false
 
 Vue.prototype.$format = new Formatter()
 Vue.prototype.$cvsLoader = new CsvLoader()
+Vue.prototype.$bankReportReader = new BankReportReader(Vue.prototype.$cvsLoader)
 Vue.prototype.$appConfig = new Config(os.homedir())
 const appConfig = Vue.prototype.$appConfig
 appConfig.load()

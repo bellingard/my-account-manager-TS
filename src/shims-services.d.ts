@@ -9,11 +9,13 @@ import { BankAccounts } from './services/bankaccounts'
 import { Institutions } from './services/institutions'
 import { Categories } from './services/categories'
 import { Stats } from './services/stats'
+import { BankReportReader } from './services/utils/bank-report-reader'
 
 declare module 'vue/types/vue' {
   interface Vue {
     $format: Formatter
     $cvsLoader: CsvLoader
+    $bankReportReader: BankReportReader
     $appConfig: Config
     $storage: Storage
     $payees: Payees
