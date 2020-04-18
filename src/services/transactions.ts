@@ -115,15 +115,32 @@ export class Transactions {
   synchronizeTransactions(accountId: string, basicTransactions: CsvTransaction[]) {
     basicTransactions.forEach(t => {
       const amount = t.credit == null ? -t.debit! : t.credit
-      const finder = this.payees.findBasedOnLabel(t.label)
-      let payee = ''
-      let category = ''
-      if (finder != null) {
-        payee = finder.payee
-        category = finder.cat
+      if (!this.alreadyContainsTransaction(t.date, amount)) {
+        // this transaction is not already known, let's add it
+        const finder = this.payees.findBasedOnLabel(t.label)
+        let payee = ''
+        let category = ''
+        if (finder != null) {
+          payee = finder.payee
+          category = finder.cat
+        }
+        this.addStaged(t.date, amount, accountId, category, payee, t.label)
       }
-      this.addStaged(t.date, amount, accountId, category, payee, t.label)
     })
+  }
+
+  /**
+   * Tells whether a transaction with the same date and amount is found
+   */
+  private alreadyContainsTransaction(date: string, amount: number): boolean {
+    const list: Transaction[] = this.list()
+    for (let index = 0; index < list.length; index++) {
+      const t = list[index]
+      if (t.date === date && t.amount === amount) {
+        return true
+      }
+    }
+    return false
   }
 
   /**

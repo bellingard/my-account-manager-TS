@@ -119,7 +119,10 @@ describe('Transactions', () => {
     expect(transactions.hasUnclassifiedStagedTransaction()).toEqual(false)
     const csvTransactions: CsvTransaction[] = [
       { date: '2017-09-08', label: 'Sport', debit: 1000, credit: null },
-      { date: '2017-09-28', label: 'Doctor Who', debit: null, credit: 2000 }
+      { date: '2017-09-28', label: 'Doctor Who', debit: null, credit: 2000 },
+      // the 2 following transactions are known and should not be added
+      { date: '2012-02-03', label: '', debit: 2618, credit: null },
+      { date: '2012-02-06', label: '', debit: null, credit: 1000 }
     ]
     transactions.synchronizeTransactions('B1', csvTransactions)
     expect(transactions.hasUnclassifiedStagedTransaction()).toEqual(true)
