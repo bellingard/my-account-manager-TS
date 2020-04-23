@@ -75,7 +75,7 @@ export class BankReportReader {
   private async analyzeMainPart(content: string): Promise<BankReport> {
     const bankReport: BankReport = { balance: null, transactions: [], cardTransactionsToReplace: [] }
     const contentMainPart =
-      content.indexOf('MR FABRICE BELLINGARD - Titulaire;') > 0
+      content.indexOf('MR FABRICE BELLINGARD - Titulaire;') >= 0
         ? content.substring(0, content.indexOf('MR FABRICE BELLINGARD - Titulaire;'))
         : content
 
@@ -158,7 +158,7 @@ export class BankReportReader {
   }
 
   hasCC(content: string): boolean {
-    return content.indexOf('MR FABRICE BELLINGARD - Titulaire;') > 0
+    return content.indexOf('MR FABRICE BELLINGARD - Titulaire;') >= 0
   }
 
   has2MonthsForCC(content: string): boolean {

@@ -1,11 +1,7 @@
-import path from 'path'
 import * as _ from 'lodash'
+import path from 'path'
+import { Finder } from '../payees'
 import { ConfigProps } from './config'
-import { Finder, Payee } from '../payees'
-import { Category } from '../categories'
-import { Transaction } from '../transactions'
-import { Institution } from '../institutions'
-import { BankAccount } from '../bankaccounts'
 import Repository, { RepositoryTypes } from './repository'
 const jsonfile = require('jsonfile')
 

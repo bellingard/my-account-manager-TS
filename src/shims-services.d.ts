@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import Formatter from './services/utils/formatter'
 import { CsvLoader } from './services/utils/csv-loader'
 import { Config } from './services/utils/config'

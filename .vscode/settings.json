@@ -25,7 +25,6 @@
   "prettier.singleQuote": true,
   "editor.tabSize": 2,
   "sonarlint.connectedMode.project": {
-    "serverId": "my_personal_org_in_sonarcloud",
     "projectKey": "bellingard_my-account-manager-TS"
   }
 }

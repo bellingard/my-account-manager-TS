@@ -21,6 +21,3 @@ export default Vue.extend({
   components: { TopBar, NavBar }
 })
 </script>
-
-<style>
-</style>

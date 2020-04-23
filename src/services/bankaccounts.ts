@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import Storage from './utils/storage'
-import { Transactions, Transaction } from './transactions'
+import { Transactions } from './transactions'
 
 export interface BankAccount {
   id: string

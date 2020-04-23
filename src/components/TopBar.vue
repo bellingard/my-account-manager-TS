@@ -1,7 +1,7 @@
 <template>
   <v-toolbar app fixed clipped-left class="blue darken-1">
     <v-avatar>
-      <img src="../assets/logo.png">
+      <img src="../assets/logo.png" alt="My Account Manager Logo">
     </v-avatar>
     <v-toolbar-title>My Account Manager</v-toolbar-title>
     <v-spacer></v-spacer>
@@ -55,6 +55,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style>
-</style>

@@ -3,7 +3,7 @@
     <v-layout>
       <v-flex xs3 class="text-xs-center">
         <v-avatar size="50px" class="mb-2 mt-2">
-          <img :src="icon" />
+          <img :src="icon" alt="Bank Icon"/>
         </v-avatar>
       </v-flex>
       <v-flex xs9>
@@ -18,7 +18,7 @@
     <v-divider light></v-divider>
     <v-card-actions v-if="this.overview">
       <v-spacer></v-spacer>
-      <i class="mr-1">{{ this.name }}</i>
+      <em class="mr-1">{{ this.name }}</em>
       <v-btn icon :to="'/accounts/' + this.accountId">
         <v-icon>keyboard_arrow_right</v-icon>
       </v-btn>
@@ -86,5 +86,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style></style>

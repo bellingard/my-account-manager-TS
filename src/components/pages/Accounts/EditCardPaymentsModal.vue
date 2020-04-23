@@ -12,7 +12,7 @@
           >{{ $format.transactionAmount(this.transaction, this.account) }}</span>
           <br>
           <span v-if="this.transaction.stagedDesc !== null" class="grey--text">
-            <i>{{ this.transaction.stagedDesc }}</i>
+            <em>{{ this.transaction.stagedDesc }}</em>
           </span>
         </div>
       </v-card-title>
@@ -87,6 +87,3 @@ export default Vue.extend({
   }
 })
 </script>
-
-<style>
-</style>
