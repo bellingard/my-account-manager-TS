@@ -5,11 +5,18 @@ import { BankReportReader, BankReport } from '@/services/utils/bank-report-reade
 describe('BankReportReader Service', () => {
   const reportReader = new BankReportReader(new CsvLoader())
 
-  it('should parse file', async () => {
+  it('should parse file with CC', async () => {
     const bankReport: BankReport = await reportReader.getBankReportFromFile(pathForFile('account-report.csv'))
     expect(bankReport.balance).toEqual(174578)
     expect(bankReport.cardTransactionsToReplace).toHaveLength(4)
     expect(bankReport.transactions).toHaveLength(36 + 11 + 14 + 35 + 31)
+  })
+
+  it('should parse file without CC', async () => {
+    const bankReport: BankReport = await reportReader.getBankReportFromFile(pathForFile('account-report-without-cc.csv'))
+    expect(bankReport.balance).toEqual(174578)
+    expect(bankReport.cardTransactionsToReplace).toHaveLength(0)
+    expect(bankReport.transactions).toHaveLength(36)
   })
 
   it('should get Fab CC content', () => {

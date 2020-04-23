@@ -31,26 +31,32 @@ export class BankReportReader {
     const bankReport: BankReport = await this.analyzeMainPart(content)
     const initialTotalAmount = this.computeInitialTotalAmount(bankReport)
 
-    // ---------------- First card ----------------
-    const contentCard1: string = this.extractFabCc(content)
-    // Last month
-    const lastMonthForCard1: BankReport = await this.analyzeCCPart(this.extractLastMonthContent(contentCard1))
-    this.mergeTransactions(bankReport, lastMonthForCard1)
-    // Previous month if it is available
-    if (this.has2MonthsForCC(contentCard1)) {
-      const previousMonthForCard1: BankReport = await this.analyzeCCPart(this.extractPreviousMonthContent(contentCard1))
-      this.mergeTransactions(bankReport, previousMonthForCard1)
-    }
+    if (this.hasCC(content)) {
+      // ---------------- First card ----------------
+      const contentCard1: string = this.extractFabCc(content)
+      // Last month
+      const lastMonthForCard1: BankReport = await this.analyzeCCPart(this.extractLastMonthContent(contentCard1))
+      this.mergeTransactions(bankReport, lastMonthForCard1)
+      // Previous month if it is available
+      if (this.has2MonthsForCC(contentCard1)) {
+        const previousMonthForCard1: BankReport = await this.analyzeCCPart(
+          this.extractPreviousMonthContent(contentCard1)
+        )
+        this.mergeTransactions(bankReport, previousMonthForCard1)
+      }
 
-    // ---------------- Second card ----------------
-    const contentCard2: string = this.extractCelineCc(content)
-    // Last month
-    const lastMonthForCard2: BankReport = await this.analyzeCCPart(this.extractLastMonthContent(contentCard2))
-    this.mergeTransactions(bankReport, lastMonthForCard2)
-    // Previous month if it is available
-    if (this.has2MonthsForCC(contentCard2)) {
-      const previousMonthForCard2: BankReport = await this.analyzeCCPart(this.extractPreviousMonthContent(contentCard2))
-      this.mergeTransactions(bankReport, previousMonthForCard2)
+      // ---------------- Second card ----------------
+      const contentCard2: string = this.extractCelineCc(content)
+      // Last month
+      const lastMonthForCard2: BankReport = await this.analyzeCCPart(this.extractLastMonthContent(contentCard2))
+      this.mergeTransactions(bankReport, lastMonthForCard2)
+      // Previous month if it is available
+      if (this.has2MonthsForCC(contentCard2)) {
+        const previousMonthForCard2: BankReport = await this.analyzeCCPart(
+          this.extractPreviousMonthContent(contentCard2)
+        )
+        this.mergeTransactions(bankReport, previousMonthForCard2)
+      }
     }
 
     // sanity check in case of errors
@@ -68,7 +74,10 @@ export class BankReportReader {
    */
   private async analyzeMainPart(content: string): Promise<BankReport> {
     const bankReport: BankReport = { balance: null, transactions: [], cardTransactionsToReplace: [] }
-    const contentMainPart = content.substring(0, content.indexOf('MR FABRICE BELLINGARD - Titulaire;'))
+    const contentMainPart =
+      content.indexOf('MR FABRICE BELLINGARD - Titulaire;') > 0
+        ? content.substring(0, content.indexOf('MR FABRICE BELLINGARD - Titulaire;'))
+        : content
 
     // Get the balance
     bankReport.balance = this.extractBalance(contentMainPart)
@@ -148,6 +157,15 @@ export class BankReportReader {
     return initialTotalAmount !== totalAmountAfterMerge
   }
 
+  hasCC(content: string): boolean {
+    return content.indexOf('MR FABRICE BELLINGARD - Titulaire;') > 0
+  }
+
+  has2MonthsForCC(content: string): boolean {
+    const lastMonthStartIndex = content.indexOf('Encours débité le')
+    return content.indexOf('Encours débité le', lastMonthStartIndex + 1) > 0
+  }
+
   extractFabCc(content: string): string {
     return content
       .substring(
@@ -175,11 +193,6 @@ export class BankReportReader {
     const lastMonthStartIndex = content.indexOf('Encours débité le')
     const previousMonthStartIndex = content.indexOf('Encours débité le', lastMonthStartIndex + 1)
     return content.substring(previousMonthStartIndex).trim()
-  }
-
-  has2MonthsForCC(content: string): boolean {
-    const lastMonthStartIndex = content.indexOf('Encours débité le')
-    return content.indexOf('Encours débité le', lastMonthStartIndex + 1) > 0
   }
 
   extractBalance(content: string): number | null {
