@@ -23,7 +23,9 @@ export class BankReportReader {
   }
 
   /**
-   * Parses the given file to generate a bank report
+   * Parses the given file to generate a bank report.
+   * 
+   * @param csvFilePath the path to the report from the bank.
    */
   async getBankReportFromFile(csvFilePath: string): Promise<BankReport> {
     const content = fs.readFileSync(csvFilePath, 'latin1')

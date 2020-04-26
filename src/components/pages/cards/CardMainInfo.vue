@@ -3,7 +3,7 @@
     <v-layout>
       <v-flex xs3 class="text-xs-center">
         <v-avatar size="50px" class="mb-2 mt-2">
-          <img :src="icon" alt="Bank Icon"/>
+          <img :src="icon" alt="Bank Icon" />
         </v-avatar>
       </v-flex>
       <v-flex xs9>
@@ -31,6 +31,10 @@
       </v-btn>
       <synchronize-modal :account="accountId" @saved="refreshAccountData"></synchronize-modal>
       <synchronize-modal2 :account="accountId" @saved="refreshAccountData"></synchronize-modal2>
+      <v-snackbar top right color="error" :timeout="0" v-model="nonMatchingBalances">
+        {{ this.nonMatchingBalancesMessage }}
+        <v-btn text @click="nonMatchingBalances = false">Close</v-btn></v-snackbar
+      >
     </v-card-actions>
   </v-card>
 </template>
@@ -50,7 +54,9 @@ export default Vue.extend({
   data() {
     return {
       // Hack to force recomputation of the balance
-      forceRecompute: 0
+      forceRecompute: 0,
+      nonMatchingBalances: false,
+      nonMatchingBalancesMessage: ''
     }
   },
 
@@ -76,7 +82,11 @@ export default Vue.extend({
   },
 
   methods: {
-    refreshAccountData() {
+    refreshAccountData(errorMessage: string) {
+      if (errorMessage) {
+        this.nonMatchingBalancesMessage = errorMessage
+        this.nonMatchingBalances = true
+      }
       this.forceRecompute++
       this.$emit('synced')
     },

@@ -58,9 +58,14 @@ export default Vue.extend({
         .getBankReportFromFile(this.accountFile)
         .then((bankReport: BankReport) => {
           this.$transactions.synchronizeTransactions(this.account, bankReport.transactions)
-          // TODO: check if the new balance equals the one from the report!!
-          // And if not, revert the staged transactions.
-          this.$emit('saved')
+          if (this.$accounts.getBalance(this.account) === bankReport.balance) {
+            // All good, great!
+            this.$emit('saved')
+          } else {
+            // The expected balance is not the updated one. There is a problem.
+            const errorMessage = `The expected balance from the bank is ${bankReport.balance}, which does not match the new balance.`
+            this.$emit('saved', errorMessage)
+          }
         })
         .catch((reason: any) => {
           console.error(reason)
