@@ -12,6 +12,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install dependencies
+      uses: CultureHQ/actions-yarn@v1.0.1
+      with:
+        args: install
+
     - name: Execute Tests
       uses: CultureHQ/actions-yarn@v1.0.1
       with:
