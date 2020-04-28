@@ -23,4 +23,6 @@ jobs:
         args: test
 
     - name: Send to Coveralls
-      run: cat coverage/lcov.info | ./node_modules/.bin/coveralls
+      uses: coverallsapp/github-action@v1.1.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
