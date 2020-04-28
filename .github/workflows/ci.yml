@@ -1,3 +1,4 @@
+# CI which executes the unit tests and uploads the report to Coveralls
 name: CI
 
 on:
