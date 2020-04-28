@@ -34,7 +34,7 @@ import Vue from 'vue'
 import { BankReport } from '../../../../services/utils/bank-report-reader'
 
 export default Vue.extend({
-  name: 'synchronize-modal2',
+  name: 'synchronize-from-file-modal',
 
   props: ['account'],
 

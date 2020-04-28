@@ -30,7 +30,7 @@
         <v-icon>{{ this.isFavorite ? 'star' : 'star_border' }}</v-icon>
       </v-btn>
       <synchronize-modal :account="accountId" @saved="refreshAccountData"></synchronize-modal>
-      <synchronize-modal2 :account="accountId" @saved="refreshAccountData"></synchronize-modal2>
+      <synchronize-from-file-modal :account="accountId" @saved="refreshAccountData"></synchronize-from-file-modal>
       <v-snackbar top right color="error" :timeout="0" v-model="nonMatchingBalances">
         {{ this.nonMatchingBalancesMessage }}
         <v-btn text @click="nonMatchingBalances = false">Close</v-btn></v-snackbar
@@ -42,12 +42,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import SynchronizeModal from './CardMainInfo/SynchronizeModal.vue'
-import SynchronizeModal2 from './CardMainInfo/SynchronizeModal2.vue'
+import SynchronizeFromFileModal from './CardMainInfo/SynchronizeFromFileModal.vue'
 
 export default Vue.extend({
   name: 'card-main-info',
 
-  components: { SynchronizeModal, SynchronizeModal2 },
+  components: { SynchronizeModal, SynchronizeFromFileModal },
 
   props: ['accountId', 'overview'],
 
