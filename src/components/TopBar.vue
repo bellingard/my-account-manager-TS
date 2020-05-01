@@ -1,20 +1,16 @@
 <template>
   <v-toolbar app fixed clipped-left class="blue darken-1">
     <v-avatar>
-      <img src="../assets/logo.png" alt="My Account Manager Logo">
+      <img src="../assets/logo.png" alt="My Account Manager Logo" />
     </v-avatar>
     <v-toolbar-title>My Account Manager</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn icon to="/">
       <v-icon>home</v-icon>
     </v-btn>
-    <payee-finder-modal></payee-finder-modal>
-    <v-snackbar
-      :timeout="2000"
-      top
-      right
-      v-model="cantSaveSnackbar"
-    >Cannot save: some staged transactions don't have a category.</v-snackbar>
+    <v-snackbar :timeout="2000" top right v-model="cantSaveSnackbar"
+      >Cannot save: some staged transactions don't have a category.</v-snackbar
+    >
     <v-btn icon :loading="saveStatus" :disabled="saveStatus" @click.native="save()">
       <v-icon>save</v-icon>
     </v-btn>
@@ -23,12 +19,9 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import PayeeFinderModal from './TopBar/PayeeFinderModal.vue'
 
 export default Vue.extend({
   name: 'top-bar',
-
-  components: { PayeeFinderModal },
 
   data() {
     return {
