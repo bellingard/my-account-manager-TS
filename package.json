@@ -7,6 +7,7 @@
   "private": true,
   "main": "background.js",
   "scripts": {
+    "clean": "rm -rf dist_electron/* && rm -rf coverage/*",
     "test": "vue-cli-service test:unit",
     "build": "vue-cli-service electron:build",
     "serve": "vue-cli-service electron:serve",
