@@ -136,7 +136,7 @@ export class Transactions {
     const list: Transaction[] = this.list()
     for (let index = 0; index < list.length; index++) {
       const t = list[index]
-      if (t.date === date && t.amount === amount) {
+      if (t.stagedDesc === undefined && t.date === date && t.amount === amount) {
         return true
       }
     }
