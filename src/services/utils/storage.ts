@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
 import path from 'path'
+import process from 'child_process'
 import { Finder } from '../payees'
 import { ConfigProps } from './config'
 import Repository, { RepositoryTypes } from './repository'
@@ -104,6 +105,25 @@ export default class Storage {
         cb(err)
       } else {
         this.payeeFinderConf = obj
+        cb(null)
+      }
+    })
+  }
+
+  /**
+   * Does a Git commit and Git push to the remote repository
+   */
+  commitAndUpload(cb: (err: Error | null) => void) {
+    const date: Date = new Date()
+    const formattedDate: string = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+    const command = `git add . && git commit -am "Comptes au ${formattedDate}" && git push`
+    process.exec(command, { cwd: this.config.storageFolder }, (error, stdout, stderr) => {
+      if (error) {
+        cb(error)
+      } else if (stderr) {
+        cb(new Error(stderr))
+      } else {
+        console.info(stdout)
         cb(null)
       }
     })
