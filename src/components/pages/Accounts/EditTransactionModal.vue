@@ -155,6 +155,8 @@ export default Vue.extend({
         this.payeeId = newTransaction.payeeId
         this.showNewPayeeField = false
         this.newPayeeName = ''
+        this.showPayeeFinderPatternField = false
+        this.payeeFinderPattern = ''
       }
     }
   }
