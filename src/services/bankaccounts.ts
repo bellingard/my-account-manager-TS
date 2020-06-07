@@ -40,7 +40,7 @@ export class BankAccounts {
    * Returns the list of bank accounts
    * @param listClosed if true, lists all the bank accounts, even the closed ones
    */
-  list(listClosed = false) {
+  list(listClosed = false): BankAccount[] {
     const accounts = _.values(this.storage.repo().bankAccounts)
     return _.chain(accounts)
       .filter(a => (listClosed ? true : !a.closed))
@@ -84,6 +84,17 @@ export class BankAccounts {
       .filter(t => accountId === t.fromId || accountId === t.toId)
       .map(t => (accountId === t.toId ? t.amount : -t.amount))
       .reduce((a, b) => a + b, 0)
+      .value()
+  }
+
+  /**
+   * Returns the overall balance, all accounts included
+   * @param accountId
+   */
+  getOverallBalance(): number {
+    return _.chain(this.list(true))
+      .map(a => this.getBalance(a.id))
+      .sum()
       .value()
   }
 }

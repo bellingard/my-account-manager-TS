@@ -9,9 +9,9 @@
         </v-card-title>
         <v-card-text class="ml-4">
           <v-icon class="mr-4">folder_open</v-icon>
-          <input v-on:change="getFileName" id="accountFile" type="file">
-          <br>
-          <br>
+          <input v-on:change="getFileName" id="accountFile" type="file" />
+          <br />
+          <br />
           {{ this.accountFile }}
         </v-card-text>
         <v-card-actions>
@@ -22,10 +22,12 @@
     </v-dialog>
 
     <v-container fluid>
+      <card-overall></card-overall>
+
+      <v-switch label="Favorites Only" v-model="favoritesOnly" color="blue darken-1"></v-switch>
       <v-layout row wrap>
-        <v-flex xs3>
-          <v-switch label="Favorites Only" v-model="favoritesOnly" color="blue darken-1"></v-switch>
-          <template v-for="item in accounts">
+        <template v-for="item in accounts">
+          <v-flex xs3 :key="item.id">
             <card-main-info
               :key="item.id"
               :accountId="item.id"
@@ -33,8 +35,8 @@
               @synced="refreshAccounts"
               class="ma-2"
             ></card-main-info>
-          </template>
-        </v-flex>
+          </v-flex>
+        </template>
       </v-layout>
     </v-container>
   </main>
@@ -44,6 +46,7 @@
 import Vue from 'vue'
 import path from 'path'
 import * as _ from 'lodash'
+import CardOverall from './cards/CardOverall.vue'
 import CardMainInfo from './cards/CardMainInfo.vue'
 import { BankAccounts, BankAccount } from '@/services/bankaccounts'
 import { Transactions } from '@/services/transactions'
@@ -55,7 +58,7 @@ import { Stats } from '../../services/stats'
 export default Vue.extend({
   name: 'dashboard',
 
-  components: { CardMainInfo },
+  components: { CardOverall, CardMainInfo },
 
   data() {
     return {
