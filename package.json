@@ -18,7 +18,7 @@
     "chart.js": "^2.8.0",
     "csvtojson": "^2.0.8",
     "jsonfile": "^5.0.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "material-design-icons-iconfont": "^5.0.1",
     "roboto-fontface": "*",
     "vue": "^2.5.22",
